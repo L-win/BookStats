@@ -10,14 +10,14 @@ public class Book {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private String description;
+    private String author;
     private String dateAdded;
-    private int priority;
+    private int year;
 
-    public Book(String title, String description, String dateAdded, int priority) {
+    public Book(String title, String author, String dateAdded, int year) {
         this.title = title;
-        this.description = description;
-        this.priority = priority;
+        this.author = author;
+        this.year = year;
         this.dateAdded = dateAdded;
     }
 
@@ -37,12 +37,12 @@ public class Book {
         return title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAuthor() {
+        return author;
     }
 
-    public int getPriority() {
-        return priority;
+    public int getYear() {
+        return year;
     }
 
     public String getDateAdded() {
