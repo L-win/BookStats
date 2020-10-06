@@ -16,12 +16,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.elvina.bookstats.AddBookActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
@@ -29,11 +34,11 @@ public class HomeFragment extends Fragment {
 
     private BookViewModel bookViewModel;
 
-    private Button buttonAddBook;
+    private FloatingActionButton buttonAddBook;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+//        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
 //        final TextView textView = root.findViewById(R.id.text_home);
@@ -44,15 +49,32 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
-        buttonAddBook = root.findViewById(R.id.button_add_book);
-        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+//        buttonAddBook = root.findViewById(R.id.button_add_book);
+//        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(),AddBookActivity.class);
+//                startActivityForResult(intent,1);
+//            }
+//        });
+
+//         RECYCLERVIEW
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+
+        final BookAdapter adapter = new BookAdapter();
+        recyclerView.setAdapter((adapter));
+//
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+        bookViewModel.getAllBooks().observe(getViewLifecycleOwner(), new Observer<List<Book>>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AddBookActivity.class);
-                startActivityForResult(intent,1);
+            public void onChanged(List<Book> books) {
+                adapter.submitList(books);
+                Toast.makeText(getActivity(), "title1 "+books.get(0).getTitle(), Toast.LENGTH_LONG).show();
             }
         });
-
+//
         return root;
     }
 
