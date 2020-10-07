@@ -2,7 +2,9 @@ package com.elvina.bookstats;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.elvina.bookstats.ui.book.AddCurrentPageDialog;
 import com.elvina.bookstats.ui.dashboard.DashboardFragment;
 import com.elvina.bookstats.ui.home.HomeFragment;
 import com.elvina.bookstats.ui.notifications.NotificationsFragment;
@@ -16,7 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,4 +53,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @Override
+    public void applyTexts(int currentPage) {
+        Toast.makeText(this, "asd"+currentPage, Toast.LENGTH_SHORT).show();
+    }
 }

@@ -1,4 +1,4 @@
-package com.elvina.bookstats;
+package com.elvina.bookstats.ui.book;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.elvina.bookstats.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;

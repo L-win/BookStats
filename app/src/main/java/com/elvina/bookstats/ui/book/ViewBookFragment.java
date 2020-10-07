@@ -1,4 +1,4 @@
-package com.elvina.bookstats;
+package com.elvina.bookstats.ui.book;
 
 import android.os.Bundle;
 
@@ -7,10 +7,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ViewBookFragment extends Fragment {
+import com.elvina.bookstats.R;
 
+public class ViewBookFragment extends Fragment implements AddCurrentPageDialog.AddCurrentPageDialogListener {
+    TextView allPagesS;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +28,6 @@ public class ViewBookFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_view_book, container, false);
 
         getActivity().setTitle("Book Details");
-
 
         Bundle bundle = getArguments();
         String title = bundle.getString("title");
@@ -41,6 +44,25 @@ public class ViewBookFragment extends Fragment {
         yearS.setText(year);
         allPagesS.setText(String.valueOf(allPages));
 
+        Button buttonAddCurrentPage = root.findViewById(R.id.button_add_current_page);
+        buttonAddCurrentPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
         return root;
+    }
+
+    public void openDialog(){
+        AddCurrentPageDialog addCurrentPageDialog = new AddCurrentPageDialog();
+//        addCurrentPageDialog.setListener(getActivity());
+        addCurrentPageDialog.show(getChildFragmentManager(),"dialog");
+    }
+
+    @Override
+    public void applyTexts(int currentPage) {
+//        allPagesS.setText(String.valueOf(currentPage));
     }
 }

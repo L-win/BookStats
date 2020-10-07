@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ViewBookFragment"
+    tools:context=".ui.book.ViewBookFragment"
     android:orientation="vertical"
     >
 
@@ -27,5 +27,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="sd" />
+
+    <Button
+        android:id="@+id/button_add_current_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Current Page" />
+
 
 </LinearLayout>
