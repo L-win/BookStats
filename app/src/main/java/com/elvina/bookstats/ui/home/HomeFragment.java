@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.submitList(books);
-//                Toast.makeText(getActivity(), "title1 "+books.get(0).getTitle(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "3: "+books.get(2).getYear(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -74,10 +74,12 @@ public class HomeFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 String author = book.getAuthor();
                 String title = book.getTitle();
-                int year = book.getYear();
+                String year = book.getYear();
+                int allPages = book.getAllPages();
                 bundle.putString("author", author);
                 bundle.putString("title", title);
-                bundle.putInt("year",year);
+                bundle.putString("year", year);
+                bundle.putInt("allpages",allPages);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
 
@@ -97,10 +99,11 @@ public class HomeFragment extends Fragment {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             String title = data.getStringExtra(AddBookActivity.EXTRA_TITLE);
             String author = data.getStringExtra(AddBookActivity.EXTRA_AUTHOR);
-            int year = data.getIntExtra(AddBookActivity.EXTRA_YEAR, 1);
+            String year = data.getStringExtra(AddBookActivity.EXTRA_YEAR);
             String dateAdded = data.getStringExtra(AddBookActivity.EXTRA_DATE_ADDED);
+            int allPages = data.getIntExtra(AddBookActivity.EXTRA_ALL_PAGES, 1);
 
-            Book book = new Book(title, author, dateAdded, year);
+            Book book = new Book(title, author, dateAdded, year, allPages);
             bookViewModel.insert(book);
 //            Snackbar.make(mainLayout, "saved", Snackbar.LENGTH_LONG).show();
             Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();

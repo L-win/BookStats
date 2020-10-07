@@ -22,5 +22,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="sd" />
+    <TextView
+        android:id="@+id/text_book_all_pages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="sd" />
 
 </LinearLayout>

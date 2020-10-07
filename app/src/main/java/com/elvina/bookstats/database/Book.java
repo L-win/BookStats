@@ -12,13 +12,17 @@ public class Book {
     private String title;
     private String author;
     private String dateAdded;
-    private int year;
+    private String dateLastPage;
+    private String year;
+    private int allPages;
 
-    public Book(String title, String author, String dateAdded, int year) {
+    public Book(String title, String author, String dateAdded, String year, int allPages) {
         this.title = title;
         this.author = author;
         this.year = year;
         this.dateAdded = dateAdded;
+        this.allPages = allPages;
+
     }
 
     public void setId(int id) {
@@ -33,6 +37,10 @@ public class Book {
         this.dateAdded = dateAdded;
     }
 
+    public void setDateLastPage(String dateLastPage) {
+        this.dateLastPage = dateLastPage;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -41,11 +49,18 @@ public class Book {
         return author;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
     public String getDateAdded() {
         return dateAdded;
+    }
+    public String getDateLastPage(){
+        return dateLastPage;
+    }
+    public int getAllPages(){return allPages;}
+    public void setAllPages(int allPages){
+        this.allPages=allPages;
     }
 }

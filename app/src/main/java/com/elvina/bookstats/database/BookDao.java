@@ -22,6 +22,6 @@ public interface BookDao {
     @Query("DELETE FROM book_table")
     void deleteAllBooks();
 
-    @Query("SELECT * FROM book_table ORDER BY year DESC")
+    @Query("SELECT * FROM book_table ORDER BY id DESC")
     LiveData<List<Book>> getAllBooks();
 }

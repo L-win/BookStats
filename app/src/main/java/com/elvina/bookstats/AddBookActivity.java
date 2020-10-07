@@ -20,52 +20,43 @@ import java.util.Date;
 
 public class AddBookActivity extends AppCompatActivity {
 
-//    public static final String EXTRA_ID = "com.example.myapplication.EXTRA_ID";
+    //    public static final String EXTRA_ID = "com.example.myapplication.EXTRA_ID";
     public static final String EXTRA_TITLE = "com.example.myapplication.EXTRA_TITLE";
     public static final String EXTRA_AUTHOR = "com.example.myapplication.EXTRA_AUTHOR";
     public static final String EXTRA_YEAR = "com.example.myapplication.EXTRA_YEAR";
     public static final String EXTRA_DATE_ADDED = "com.example.myapplication.EXTRA_DATE_ADDED";
+    public static final String EXTRA_ALL_PAGES = "com.example.myapplication.EXTRA_ALL_PAGES";
+
 
     Calendar c = Calendar.getInstance();
 
-    private EditText editTextTitle, editTextAuthor, editTextYear;
+    private EditText editTextTitle, editTextAuthor, editTextYear, editTextAllPages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book);
 
-
-        // SETTINGS
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-//        boolean settingsDarkMode = preferences.getBoolean("check_box_dark_mode", true);
-//        if (settingsDarkMode) {
-//            setTheme(R.style.darktheme);
-//        }
-
         editTextTitle = findViewById(R.id.edit_text_title);
         editTextAuthor = findViewById(R.id.edit_text_author);
         editTextYear = findViewById(R.id.edit_text_year);
-//        switchPin = findViewById(R.id.switch1);
-
-//        mainLayout = findViewById(R.id.main_layout);
-
-//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        editTextAllPages = findViewById(R.id.edit_text_all_pages);
 
         setTitle("Add Book");
-
-
     }
 
     private void saveBook() {
         String title = editTextTitle.getText().toString();
         String author = editTextAuthor.getText().toString();
         String year = editTextYear.getText().toString();
+        int allPages = Integer.parseInt(editTextAllPages.getText().toString());
         String currentDate = c.getTime().toString();
+
+        // TODO: Determine Optional and Required fields
+        // TODO: Check if fields have proper types
 
         if (title.trim().isEmpty() || author.trim().isEmpty()) {
             Toast.makeText(this, "Fields are empty.", Toast.LENGTH_SHORT).show();
-//            Snackbar.make(mainLayout, "Fields are empty.", Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -74,11 +65,7 @@ public class AddBookActivity extends AppCompatActivity {
         data.putExtra(EXTRA_AUTHOR, author);
         data.putExtra(EXTRA_YEAR, year);
         data.putExtra(EXTRA_DATE_ADDED, currentDate);
-
-//        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-//        if (id != -1) {
-//            data.putExtra(EXTRA_ID, id);
-//        }
+        data.putExtra(EXTRA_ALL_PAGES, allPages);
 
         setResult(RESULT_OK, data);
         finish();

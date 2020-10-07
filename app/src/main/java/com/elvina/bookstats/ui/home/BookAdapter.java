@@ -31,7 +31,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.BookHolder> {
         public boolean areContentsTheSame(@NonNull Book oldItem, @NonNull Book newItem) {
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getAuthor().equals(newItem.getAuthor()) &&
-                    oldItem.getYear() == newItem.getYear();
+                    oldItem.getYear().equals(newItem.getYear());
         }
     };
 
@@ -48,7 +48,7 @@ public class BookAdapter extends ListAdapter<Book, BookAdapter.BookHolder> {
         Book currentNote = getItem(position);
         holder.textViewTitle.setText(currentNote.getTitle());
         holder.textViewAuthor.setText(currentNote.getAuthor());
-        holder.textViewYear.setText(String.valueOf(currentNote.getYear()));
+        holder.textViewYear.setText(currentNote.getYear());
 
 //        if (currentNote.getPriority() == 0) {
 //            holder.textViewPriority.setBackground(null);

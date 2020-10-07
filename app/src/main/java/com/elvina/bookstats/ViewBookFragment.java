@@ -29,15 +29,17 @@ public class ViewBookFragment extends Fragment {
         Bundle bundle = getArguments();
         String title = bundle.getString("title");
         String author = bundle.getString("author");
-        int year = bundle.getInt("year");
+        String year = bundle.getString("year");
+        int allPages = bundle.getInt("allpages");
 
         TextView titleS = root.findViewById(R.id.text_book_title);
         TextView authorS = root.findViewById(R.id.text_book_author);
         TextView yearS = root.findViewById(R.id.text_book_year);
-
+        TextView allPagesS = root.findViewById(R.id.text_book_all_pages);
         titleS.setText(title);
         authorS.setText(author);
-        yearS.setText(year+"");
+        yearS.setText(year);
+        allPagesS.setText(String.valueOf(allPages));
 
         return root;
     }
