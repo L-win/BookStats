@@ -74,8 +74,10 @@ public class HomeFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 String author = book.getAuthor();
                 String title = book.getTitle();
+                int year = book.getYear();
                 bundle.putString("author", author);
                 bundle.putString("title", title);
+                bundle.putInt("year",year);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
 

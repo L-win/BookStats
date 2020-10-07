@@ -2,14 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ViewBookFragment"
     android:orientation="vertical"
     >
 
     <TextView
+        android:id="@+id/text_book_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:id="@+id/text_book_author"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="asd" />
+    <TextView
+        android:id="@+id/text_book_year"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="sd" />
 
 </LinearLayout>
