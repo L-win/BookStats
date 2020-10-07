@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.elvina.bookstats.AddBookActivity;
 import com.elvina.bookstats.R;
+import com.elvina.bookstats.ViewBookFragment;
 import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,51 +33,59 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-//    private HomeViewModel homeViewModel;
-
     private BookViewModel bookViewModel;
 
     private FloatingActionButton buttonAddBook;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-//        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+        buttonAddBook = root.findViewById(R.id.button_add_book);
+        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddBookActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
 
-//        buttonAddBook = root.findViewById(R.id.button_add_book);
-//        buttonAddBook.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(),AddBookActivity.class);
-//                startActivityForResult(intent,1);
-//            }
-//        });
-
-//         RECYCLERVIEW
+        // RECYCLERVIEW
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
         final BookAdapter adapter = new BookAdapter();
         recyclerView.setAdapter((adapter));
-//
+
+        // VIEWMODEL
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
         bookViewModel.getAllBooks().observe(getViewLifecycleOwner(), new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.submitList(books);
-                Toast.makeText(getActivity(), "title1 "+books.get(0).getTitle(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(getActivity(), "title1 "+books.get(0).getTitle(), Toast.LENGTH_LONG).show();
             }
         });
-//
+
+        // ON CLICK
+        adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                Bundle bundle = new Bundle();
+                String author = book.getAuthor();
+                String title = book.getTitle();
+                bundle.putString("author", author);
+                bundle.putString("title", title);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+
+                ViewBookFragment viewBookFragment = new ViewBookFragment();
+                viewBookFragment.setArguments(bundle);
+                ft.replace(R.id.fragment_container, viewBookFragment);
+                ft.commit();
+            }
+        });
+
         return root;
     }
 
