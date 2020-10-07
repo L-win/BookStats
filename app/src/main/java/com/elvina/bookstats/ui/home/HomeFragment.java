@@ -71,11 +71,16 @@ public class HomeFragment extends Fragment {
                 String author = book.getAuthor();
                 String title = book.getTitle();
                 String year = book.getYear();
+                String dateAdded = book.getDateAdded();
                 int allPages = book.getAllPages();
+                int currentPage = book.getCurrentPage();
+                bundle.putInt("id", book.getId());
                 bundle.putString("author", author);
                 bundle.putString("title", title);
                 bundle.putString("year", year);
-                bundle.putInt("allpages",allPages);
+                bundle.putString("dateadded", dateAdded);
+                bundle.putInt("allpages", allPages);
+                bundle.putInt("currentpage", currentPage);
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
 

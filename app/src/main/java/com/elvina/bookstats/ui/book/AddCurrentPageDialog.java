@@ -8,12 +8,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.elvina.bookstats.R;
+import com.elvina.bookstats.database.Book;
+import com.elvina.bookstats.database.BookViewModel;
 
 public class AddCurrentPageDialog extends AppCompatDialogFragment {
 
@@ -27,6 +31,7 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         View view = inflater.inflate(R.layout.layout_dialog, null);
+        final Bundle bundle = getArguments();
 
         builder.setView(view)
                 .setTitle("Enter current page.")
@@ -41,6 +46,11 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         int currentPage = Integer.parseInt(editTextCurrentPage.getText().toString());
                         listener.applyTexts(currentPage);
+                        BookViewModel bookViewModel = new ViewModelProvider(getActivity()).get(BookViewModel.class);
+                        Book book = new Book(bundle.getString("title"), bundle.getString("author"), bundle.getString("dateAdded"), bundle.getString("year"), bundle.getInt("allpages"));
+                        book.setId(bundle.getInt("id"));
+                        book.setCurrentPage(currentPage);
+                        bookViewModel.update(book);
                     }
                 });
 
@@ -58,10 +68,6 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
             throw new ClassCastException(context.toString()+" must implement AddCurrentPageDialogListener");
         }
     }
-
-//    public void setListener(Context context){
-//        listener = (AddCurrentPageDialogListener) context;
-//    }
 
     public interface AddCurrentPageDialogListener {
         void applyTexts(int currentPage);

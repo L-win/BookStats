@@ -14,6 +14,7 @@ public class Book {
     private String dateAdded;
     private String dateLastPage;
     private String year;
+    private int currentPage;
     private int allPages;
 
     public Book(String title, String author, String dateAdded, String year, int allPages) {
@@ -56,11 +57,24 @@ public class Book {
     public String getDateAdded() {
         return dateAdded;
     }
-    public String getDateLastPage(){
+
+    public String getDateLastPage() {
         return dateLastPage;
     }
-    public int getAllPages(){return allPages;}
-    public void setAllPages(int allPages){
-        this.allPages=allPages;
+
+    public int getAllPages() {
+        return allPages;
+    }
+
+    public void setAllPages(int allPages) {
+        this.allPages = allPages;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getCurrentPage(){
+        return this.currentPage;
     }
 }

@@ -13,12 +13,14 @@ import android.widget.Toast;
 
 import com.elvina.bookstats.R;
 
+import org.w3c.dom.Text;
+
 public class ViewBookFragment extends Fragment implements AddCurrentPageDialog.AddCurrentPageDialogListener {
     TextView allPagesS;
+    Bundle bundle;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -29,20 +31,19 @@ public class ViewBookFragment extends Fragment implements AddCurrentPageDialog.A
 
         getActivity().setTitle("Book Details");
 
-        Bundle bundle = getArguments();
-        String title = bundle.getString("title");
-        String author = bundle.getString("author");
-        String year = bundle.getString("year");
-        int allPages = bundle.getInt("allpages");
+        bundle = getArguments();
 
         TextView titleS = root.findViewById(R.id.text_book_title);
         TextView authorS = root.findViewById(R.id.text_book_author);
         TextView yearS = root.findViewById(R.id.text_book_year);
         TextView allPagesS = root.findViewById(R.id.text_book_all_pages);
-        titleS.setText(title);
-        authorS.setText(author);
-        yearS.setText(year);
-        allPagesS.setText(String.valueOf(allPages));
+        TextView currentPageS = root.findViewById(R.id.text_book_curent_page);
+
+        titleS.setText(bundle.getString("title"));
+        authorS.setText(bundle.getString("author"));
+        yearS.setText(bundle.getString("year"));
+        allPagesS.setText(String.valueOf(bundle.getInt("allpages")));
+        currentPageS.setText(String.valueOf(bundle.getInt("currentpage")));
 
         Button buttonAddCurrentPage = root.findViewById(R.id.button_add_current_page);
         buttonAddCurrentPage.setOnClickListener(new View.OnClickListener() {
@@ -56,13 +57,14 @@ public class ViewBookFragment extends Fragment implements AddCurrentPageDialog.A
     }
 
     public void openDialog(){
+//        Bundle bundle = getArguments();
         AddCurrentPageDialog addCurrentPageDialog = new AddCurrentPageDialog();
-//        addCurrentPageDialog.setListener(getActivity());
+        addCurrentPageDialog.setArguments(bundle);
         addCurrentPageDialog.show(getChildFragmentManager(),"dialog");
     }
 
     @Override
     public void applyTexts(int currentPage) {
-//        allPagesS.setText(String.valueOf(currentPage));
+        allPagesS.setText(String.valueOf(currentPage));
     }
 }

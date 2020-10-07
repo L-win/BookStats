@@ -27,6 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="sd" />
+    <TextView
+        android:id="@+id/text_book_curent_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="sd" />
 
     <Button
         android:id="@+id/button_add_current_page"
