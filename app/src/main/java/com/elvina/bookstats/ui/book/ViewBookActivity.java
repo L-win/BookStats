@@ -15,6 +15,10 @@ import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
 import com.elvina.bookstats.database.ViewBookViewModel;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+
 public class ViewBookActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener {
 
     public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
@@ -25,8 +29,10 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     public static final String EXTRA_ALL_PAGES = "com.elvina.bookstats.EXTRA_ALL_PAGES";
     public static final String EXTRA_CURRENT_PAGE = "com.elvina.bookstats.EXTRA_CURRENT_PAGES";
 
-    Bundle bundle;
-    TextView currentPageS;
+    TextView currentPage, progress;
+    int p;
+    String progressC;
+    DecimalFormat df;
     Intent intent;
     ViewBookViewModel viewBookViewModel;
 
@@ -39,16 +45,30 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         intent = getIntent();
 
-        TextView titleS = findViewById(R.id.text_book_title);
-        TextView authorS = findViewById(R.id.text_book_author);
-        TextView yearS = findViewById(R.id.text_book_year);
-        TextView allPagesS = findViewById(R.id.text_book_all_pages);
-        currentPageS = findViewById(R.id.text_book_curent_page);
-        titleS.setText(intent.getStringExtra(EXTRA_TITLE));
-        authorS.setText(intent.getStringExtra(EXTRA_AUTHOR));
-        yearS.setText(intent.getStringExtra(EXTRA_YEAR));
-        allPagesS.setText(String.valueOf(intent.getIntExtra(EXTRA_ALL_PAGES, 0)));
-        currentPageS.setText(String.valueOf(intent.getIntExtra(EXTRA_CURRENT_PAGE, 0)));
+        TextView title = findViewById(R.id.text_book_title);
+        TextView author = findViewById(R.id.text_book_author);
+        TextView year = findViewById(R.id.text_book_year);
+        TextView allPages = findViewById(R.id.text_book_all_pages);
+        progress = findViewById(R.id.text_book_progress);
+        currentPage = findViewById(R.id.text_book_curent_page);
+
+        // Calculate progress
+        p = intent.getIntExtra(EXTRA_ALL_PAGES, 0);
+        int pc = intent.getIntExtra(EXTRA_CURRENT_PAGE, 0);
+        double progressT = 100.0 / (Double.valueOf(p) / Double.valueOf(pc));
+        df = new DecimalFormat("###.#");
+        progressC = df.format(progressT)+"%";
+
+        title.setText(intent.getStringExtra(EXTRA_TITLE));
+        author.setText(intent.getStringExtra(EXTRA_AUTHOR));
+        year.setText(intent.getStringExtra(EXTRA_YEAR));
+        allPages.setText(String.valueOf(intent.getIntExtra(EXTRA_ALL_PAGES, 0)));
+        currentPage.setText(String.valueOf(intent.getIntExtra(EXTRA_CURRENT_PAGE, 0)));
+        progress.setText(progressC);
+
+//        100/(pages/page)
+
+//        Toast.makeText(this, "progre"progressC, Toast.LENGTH_SHORT).show();
 
         viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
 
@@ -57,11 +77,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             @Override
             public void onClick(View v) {
                 openDialog();
-
             }
         });
-
-
     }
 
     public void openDialog() {
@@ -71,9 +88,15 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
     @Override
     public void applyTexts(int currentPage) {
-        currentPageS.setText(String.valueOf(currentPage));
-        Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
         if (currentPage != intent.getIntExtra(EXTRA_CURRENT_PAGE, 1)) {
+
+            this.currentPage.setText(String.valueOf(currentPage));
+            double progressT =
+                    100.0 / (Double.valueOf(this.p) / Double.valueOf(currentPage));
+            progressC = df.format(progressT)+"%";
+            this.progress.setText(this.progressC);
+
             Book book = new Book(
                     intent.getStringExtra(EXTRA_TITLE),
                     intent.getStringExtra(EXTRA_AUTHOR),

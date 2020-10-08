@@ -22,7 +22,7 @@ public class ViewBookViewModel extends AndroidViewModel {
 //    public void insert(Book book){
 //        repository.insert(book);
 //    }
-    public void update(Book book){git
+    public void update(Book book){
         repository.update(book);
     }
 //    public void delete(Book book){

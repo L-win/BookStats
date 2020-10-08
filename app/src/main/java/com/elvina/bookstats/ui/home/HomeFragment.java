@@ -11,8 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elvina.bookstats.ui.book.AddBookActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.ui.book.ViewBookActivity;
-import com.elvina.bookstats.ui.book.ViewBookFragment;
 import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -60,7 +57,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.submitList(books);
-//                Toast.makeText(getActivity(), "3: "+books.get(2).getYear(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -68,41 +64,16 @@ public class HomeFragment extends Fragment {
         adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Book book) {
-                Bundle bundle = new Bundle();
-                String author = book.getAuthor();
-                String title = book.getTitle();
-                String year = book.getYear();
-                String dateAdded = book.getDateAdded();
-                int allPages = book.getAllPages();
-                int currentPage = book.getCurrentPage();
-
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
-                intent.putExtra(ViewBookActivity.EXTRA_ID,book.getId());
-                intent.putExtra(ViewBookActivity.EXTRA_TITLE,book.getTitle());
-                intent.putExtra(ViewBookActivity.EXTRA_AUTHOR,book.getAuthor());
-                intent.putExtra(ViewBookActivity.EXTRA_YEAR,book.getYear());
-                intent.putExtra(ViewBookActivity.EXTRA_DATE_ADDED,book.getDateAdded());
-                intent.putExtra(ViewBookActivity.EXTRA_ALL_PAGES,book.getAllPages());
-                intent.putExtra(ViewBookActivity.EXTRA_CURRENT_PAGE,book.getCurrentPage());
+                intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
+                intent.putExtra(ViewBookActivity.EXTRA_TITLE, book.getTitle());
+                intent.putExtra(ViewBookActivity.EXTRA_AUTHOR, book.getAuthor());
+                intent.putExtra(ViewBookActivity.EXTRA_YEAR, book.getYear());
+                intent.putExtra(ViewBookActivity.EXTRA_DATE_ADDED, book.getDateAdded());
+                intent.putExtra(ViewBookActivity.EXTRA_ALL_PAGES, book.getAllPages());
+                intent.putExtra(ViewBookActivity.EXTRA_CURRENT_PAGE, book.getCurrentPage());
 //                Toast.makeText(getActivity(), "int: "+book.getAllPages(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
-
-//                bundle.putInt("id", book.getId());
-//                bundle.putString("author", author);
-//                bundle.putString("title", title);
-//                bundle.putString("year", year);
-//                bundle.putString("dateadded", dateAdded);
-//                bundle.putInt("allpages", allPages);
-//                bundle.putInt("currentpage", currentPage);
-
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                FragmentTransaction ft = fm.beginTransaction();
-
-//                ViewBookFragment viewBookFragment = new ViewBookFragment();
-//                viewBookFragment.setArguments(bundle);
-//                ft.replace(R.id.fragment_container, viewBookFragment);
-//                ft.commit();
-
             }
         });
 
@@ -121,7 +92,6 @@ public class HomeFragment extends Fragment {
 
             Book book = new Book(title, author, dateAdded, year, allPages);
             bookViewModel.insert(book);
-//            Snackbar.make(mainLayout, "saved", Snackbar.LENGTH_LONG).show();
             Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();
 
         }
