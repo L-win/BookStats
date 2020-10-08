@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.book.ViewBookActivity"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/text_book_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="title" />
+    <TextView
+        android:id="@+id/text_book_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="author" />
+    <TextView
+        android:id="@+id/text_book_year"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="year" />
+    <TextView
+        android:id="@+id/text_book_all_pages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="all pages" />
+    <TextView
+        android:id="@+id/text_book_curent_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="current page" />
+
+    <Button
+        android:id="@+id/button_add_current_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Current Page" />
+
+</LinearLayout>

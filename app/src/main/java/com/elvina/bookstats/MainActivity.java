@@ -24,7 +24,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener{
+public class MainActivity extends AppCompatActivity {
 
     private BookViewModel bookViewModel;
 
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements AddCurrentPageDia
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
     }
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements AddCurrentPageDia
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectedFragment = new HomeFragment();
                     break;
@@ -54,15 +54,9 @@ public class MainActivity extends AppCompatActivity implements AddCurrentPageDia
                     selectedFragment = new NotificationsFragment();
                     break;
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
             return true;
         }
     };
-
-    @Override
-    public void applyTexts(int currentPage) {
-        Toast.makeText(this, "Book Updated!", Toast.LENGTH_SHORT).show();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
-    }
 }

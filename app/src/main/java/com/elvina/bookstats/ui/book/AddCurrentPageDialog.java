@@ -46,11 +46,11 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         int currentPage = Integer.parseInt(editTextCurrentPage.getText().toString());
                         listener.applyTexts(currentPage);
-                        BookViewModel bookViewModel = new ViewModelProvider(getActivity()).get(BookViewModel.class);
-                        Book book = new Book(bundle.getString("title"), bundle.getString("author"), bundle.getString("dateAdded"), bundle.getString("year"), bundle.getInt("allpages"));
-                        book.setId(bundle.getInt("id"));
-                        book.setCurrentPage(currentPage);
-                        bookViewModel.update(book);
+//                        BookViewModel bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+//                        Book book = new Book(bundle.getString("title"), bundle.getString("author"), bundle.getString("dateAdded"), bundle.getString("year"), bundle.getInt("allpages"));
+//                        book.setId(bundle.getInt("id"));
+//                        book.setCurrentPage(currentPage);
+//                        bookViewModel.update(book);
                     }
                 });
 
