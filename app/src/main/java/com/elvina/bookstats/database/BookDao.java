@@ -24,4 +24,7 @@ public interface BookDao {
 
     @Query("SELECT * FROM book_table ORDER BY id DESC")
     LiveData<List<Book>> getAllBooks();
+
+    @Query("SELECT * FROM book_table WHERE id = :id")
+    LiveData<Book> getSingleBook(int id);
 }

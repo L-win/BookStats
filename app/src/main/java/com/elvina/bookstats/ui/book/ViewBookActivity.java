@@ -1,6 +1,7 @@
 package com.elvina.bookstats.ui.book;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -54,9 +56,23 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         setTitle("Book Details");
 
-        viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
-
         intent = getIntent();
+
+        final Book[] thisBook = {null};
+
+        viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
+        viewBookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID,1)).observe(this,
+                new Observer<Book>() {
+            @Override
+            public void onChanged(Book book) {
+//                adapter.submitList(books);
+//                Toast.makeText(ViewBookActivity.this, "1: "+book.getTitle(),
+//                        Toast.LENGTH_SHORT).show();
+                thisBook[0] = book;
+            }
+        });
+
+        Toast.makeText(this, "2:"+thisBook[0].getTitle(), Toast.LENGTH_SHORT).show();
 
         // PREPARE VIEWS
         viewTitle = findViewById(R.id.text_book_title);
@@ -100,14 +116,29 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         }
 
+//        int tempPage = thisBook[0].getCurrentPage();
+
+//        int pagesPerDay = 0;
+//        if ((int) daysSpent > 0 && tempPage > 0) {
+//            pagesPerDay =
+//                    thisBook[0].getCurrentPage() / (int) daysSpent;
+//            if (pagesPerDay < 1) {
+//                pagesPerDay = 1;
+//            }
+//        }
+
+//        int cPage = thisBook[0].getCurrentPage();
+        int cPage = intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
+
         int pagesPerDay = 0;
-        if ((int) daysSpent > 0) {
+        if ((int) daysSpent > 0 && cPage > 0) {
             pagesPerDay =
-                    intent.getIntExtra(EXTRA_CURRENT_PAGE, 1) / (int) daysSpent;
+                    cPage/ (int) daysSpent;
             if (pagesPerDay < 1) {
                 pagesPerDay = 1;
             }
         }
+
 
         // CALCULATE PROGRESS
         bookAllPages = intent.getIntExtra(EXTRA_ALL_PAGES, 0);
@@ -120,10 +151,10 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         String bookProgress = df.format(bookProgressCalc) + "%";
 
         // Other calculations
-        int pagesLeft =
-                intent.getIntExtra(EXTRA_ALL_PAGES, 1) -
-                        intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
-        int daysLeft = pagesLeft / pagesPerDay;
+//        int pagesLeft =
+//                intent.getIntExtra(EXTRA_ALL_PAGES, 1) -
+//                        intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
+//        int daysLeft = pagesLeft / pagesPerDay;
 
         // SET VALUES TO VIEW
         viewTitle.setText(intent.getStringExtra(EXTRA_TITLE));
@@ -135,8 +166,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewDateAdded.setText(bookDateAdded);
         viewDateLastPage.setText(bookDateLastPage);
         viewPagesPerDay.setText(String.valueOf(pagesPerDay));
-        viewPagesLeft.setText(String.valueOf(pagesLeft));
-        viewDaysLeft.setText(String.valueOf(daysLeft));
+        viewPagesLeft.setText(String.valueOf(0));
+        viewDaysLeft.setText(String.valueOf(0));
 
         // WHEN NEW PAGE ADDED..
         Button buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
