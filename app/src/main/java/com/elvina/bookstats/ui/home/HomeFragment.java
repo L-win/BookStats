@@ -72,6 +72,8 @@ public class HomeFragment extends Fragment {
                 intent.putExtra(ViewBookActivity.EXTRA_DATE_ADDED, book.getDateAdded());
                 intent.putExtra(ViewBookActivity.EXTRA_ALL_PAGES, book.getAllPages());
                 intent.putExtra(ViewBookActivity.EXTRA_CURRENT_PAGE, book.getCurrentPage());
+                intent.putExtra(ViewBookActivity.EXTRA_DATE_LAST_PAGE,
+                        book.getDateLastPage());
 //                Toast.makeText(getActivity(), "int: "+book.getAllPages(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }

@@ -23,7 +23,7 @@ public class Book {
         this.year = year;
         this.dateAdded = dateAdded;
         this.allPages = allPages;
-
+        this.dateLastPage = dateAdded;
     }
 
     public void setId(int id) {
@@ -38,8 +38,16 @@ public class Book {
         this.dateAdded = dateAdded;
     }
 
+    public String getDateAdded() {
+        return dateAdded;
+    }
+
     public void setDateLastPage(String dateLastPage) {
         this.dateLastPage = dateLastPage;
+    }
+
+    public String getDateLastPage() {
+        return dateLastPage;
     }
 
     public String getTitle() {
@@ -54,27 +62,19 @@ public class Book {
         return year;
     }
 
-    public String getDateAdded() {
-        return dateAdded;
-    }
-
-    public String getDateLastPage() {
-        return dateLastPage;
+    public void setAllPages(int allPages) {
+        this.allPages = allPages;
     }
 
     public int getAllPages() {
         return allPages;
     }
 
-    public void setAllPages(int allPages) {
-        this.allPages = allPages;
-    }
-
     public void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
     }
 
-    public int getCurrentPage(){
+    public int getCurrentPage() {
         return this.currentPage;
     }
 }
