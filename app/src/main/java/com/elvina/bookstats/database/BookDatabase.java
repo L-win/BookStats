@@ -10,7 +10,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Book.class}, version=3)
+@Database(entities = {Book.class}, version=1)
 public abstract class BookDatabase extends RoomDatabase {
     private static BookDatabase instance;
     public abstract BookDao bookDao();
@@ -43,7 +43,12 @@ public abstract class BookDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids){
-            bookDao.insert(new Book("Title_1","Author_1","Thu Sep 28 20:21:30 JST 2000","2017",250));
+            bookDao.insert(new Book(
+                    "Title_1",
+                    "Author_1",
+                    "Thu Sep 28 20:21:30 UTC 2020",
+                    "2017",
+                    250));
             return null;
         }
     }

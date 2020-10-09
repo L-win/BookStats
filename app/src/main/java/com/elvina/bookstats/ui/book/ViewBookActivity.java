@@ -21,6 +21,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class ViewBookActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener {
 
@@ -37,7 +39,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     ViewBookViewModel viewBookViewModel;
 
     TextView viewTitle, viewAuthor, viewYear, viewAllPages, viewCurrentPage,
-            viewProgress, viewDateAdded,viewDateLastPage;
+            viewProgress, viewDateAdded, viewDateLastPage, viewPagesPerDay,
+            viewPagesLeft, viewDaysLeft;
 
     Intent intent;
 
@@ -64,10 +67,13 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewCurrentPage = findViewById(R.id.text_book_curent_page);
         viewDateAdded = findViewById(R.id.text_book_date_added);
         viewDateLastPage = findViewById(R.id.text_book_date_last_page);
+        viewPagesPerDay = findViewById(R.id.text_book_pages_per_day);
+        viewPagesLeft = findViewById(R.id.text_book_pages_left);
+        viewDaysLeft = findViewById(R.id.text_book_days_left);
 
         // FORMAT DATE
         String a = intent.getStringExtra(EXTRA_DATE_ADDED);
-        String b =intent.getStringExtra(EXTRA_DATE_LAST_PAGE);
+        String b = intent.getStringExtra(EXTRA_DATE_LAST_PAGE);
         SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         Date dateA = null;
         Date dateB = null;
@@ -81,14 +87,43 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         String bookDateAdded = formatter.format(dateA);
         String bookDateLastPage = formatter.format(dateB);
 
+        // CALCULATE PAGES PER DAY
+        long daysSpent = new Long(0L);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            Date firstDate = sdf.parse(intent.getStringExtra(EXTRA_DATE_ADDED));
+            Date secondDate = sdf.parse(intent.getStringExtra(EXTRA_DATE_LAST_PAGE));
+            long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            daysSpent = diff;
+        } catch (Exception e) {
+
+        }
+
+        int pagesPerDay = 0;
+        if ((int) daysSpent > 0) {
+            pagesPerDay =
+                    intent.getIntExtra(EXTRA_CURRENT_PAGE, 1) / (int) daysSpent;
+            if (pagesPerDay < 1) {
+                pagesPerDay = 1;
+            }
+        }
 
         // CALCULATE PROGRESS
         bookAllPages = intent.getIntExtra(EXTRA_ALL_PAGES, 0);
         int bookCurrenPage = intent.getIntExtra(EXTRA_CURRENT_PAGE, 0);
         double bookProgressCalc =
-                100.0 / (Double.valueOf(bookAllPages) / Double.valueOf(bookCurrenPage));
+                100.0 /
+                        (Double.valueOf(bookAllPages) /
+                                Double.valueOf(bookCurrenPage));
         df = new DecimalFormat("###.#");
         String bookProgress = df.format(bookProgressCalc) + "%";
+
+        // Other calculations
+        int pagesLeft =
+                intent.getIntExtra(EXTRA_ALL_PAGES, 1) -
+                        intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
+        int daysLeft = pagesLeft / pagesPerDay;
 
         // SET VALUES TO VIEW
         viewTitle.setText(intent.getStringExtra(EXTRA_TITLE));
@@ -97,13 +132,11 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewAllPages.setText(String.valueOf(intent.getIntExtra(EXTRA_ALL_PAGES, 0)));
         viewCurrentPage.setText(String.valueOf(intent.getIntExtra(EXTRA_CURRENT_PAGE, 0)));
         viewProgress.setText(bookProgress);
-        //
         viewDateAdded.setText(bookDateAdded);
         viewDateLastPage.setText(bookDateLastPage);
-        Toast.makeText(this, intent.getStringExtra(EXTRA_DATE_ADDED), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, intent.getStringExtra(EXTRA_DATE_LAST_PAGE),
-//                Toast.LENGTH_SHORT).show();
-
+        viewPagesPerDay.setText(String.valueOf(pagesPerDay));
+        viewPagesLeft.setText(String.valueOf(pagesLeft));
+        viewDaysLeft.setText(String.valueOf(daysLeft));
 
         // WHEN NEW PAGE ADDED..
         Button buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
