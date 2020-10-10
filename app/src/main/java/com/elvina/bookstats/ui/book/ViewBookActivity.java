@@ -46,7 +46,10 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
     Intent intent;
 
-    int bookAllPages;
+    int bookAllPages, pagesPerDay, pagesLeft, daysLeft;
+    String bookDateAdded, bookDateLastPage, bookProgress;
+    long daysSpent;
+
     DecimalFormat df;
 
     @Override
@@ -58,116 +61,29 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         intent = getIntent();
 
-        final Book[] thisBook = {null};
-
         viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
-        viewBookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID,1)).observe(this,
+        viewBookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID, 1)).observe(this,
                 new Observer<Book>() {
-            @Override
-            public void onChanged(Book book) {
-//                adapter.submitList(books);
-//                Toast.makeText(ViewBookActivity.this, "1: "+book.getTitle(),
-//                        Toast.LENGTH_SHORT).show();
-                thisBook[0] = book;
-            }
-        });
+                    @Override
+                    public void onChanged(Book book) {
 
-        Toast.makeText(this, "2:"+thisBook[0].getTitle(), Toast.LENGTH_SHORT).show();
+//                        thisBook[0] = book;
 
-        // PREPARE VIEWS
-        viewTitle = findViewById(R.id.text_book_title);
-        viewAuthor = findViewById(R.id.text_book_author);
-        viewYear = findViewById(R.id.text_book_year);
-        viewAllPages = findViewById(R.id.text_book_all_pages);
-        viewProgress = findViewById(R.id.text_book_progress);
-        viewCurrentPage = findViewById(R.id.text_book_curent_page);
-        viewDateAdded = findViewById(R.id.text_book_date_added);
-        viewDateLastPage = findViewById(R.id.text_book_date_last_page);
-        viewPagesPerDay = findViewById(R.id.text_book_pages_per_day);
-        viewPagesLeft = findViewById(R.id.text_book_pages_left);
-        viewDaysLeft = findViewById(R.id.text_book_days_left);
+                        // PREPARE VIEWS
+                        prepareViews();
 
-        // FORMAT DATE
-        String a = intent.getStringExtra(EXTRA_DATE_ADDED);
-        String b = intent.getStringExtra(EXTRA_DATE_LAST_PAGE);
-        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-        Date dateA = null;
-        Date dateB = null;
-        try {
-            dateA = parser.parse(a);
-            dateB = parser.parse(b);
-        } catch (Exception e) {
+                        // PREPARE DATES
+                        formatDate(book);
 
-        }
-        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
-        String bookDateAdded = formatter.format(dateA);
-        String bookDateLastPage = formatter.format(dateB);
+                        // CALCULATE ALL STATS
+                        calculateStats(book);
 
-        // CALCULATE PAGES PER DAY
-        long daysSpent = new Long(0L);
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
-            Date firstDate = sdf.parse(intent.getStringExtra(EXTRA_DATE_ADDED));
-            Date secondDate = sdf.parse(intent.getStringExtra(EXTRA_DATE_LAST_PAGE));
-            long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            daysSpent = diff;
-        } catch (Exception e) {
-
-        }
-
-//        int tempPage = thisBook[0].getCurrentPage();
-
-//        int pagesPerDay = 0;
-//        if ((int) daysSpent > 0 && tempPage > 0) {
-//            pagesPerDay =
-//                    thisBook[0].getCurrentPage() / (int) daysSpent;
-//            if (pagesPerDay < 1) {
-//                pagesPerDay = 1;
-//            }
-//        }
-
-//        int cPage = thisBook[0].getCurrentPage();
-        int cPage = intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
-
-        int pagesPerDay = 0;
-        if ((int) daysSpent > 0 && cPage > 0) {
-            pagesPerDay =
-                    cPage/ (int) daysSpent;
-            if (pagesPerDay < 1) {
-                pagesPerDay = 1;
-            }
-        }
+                        // SET VALUES TO VIEW
+                        setValues(book);
+                    }
+                });
 
 
-        // CALCULATE PROGRESS
-        bookAllPages = intent.getIntExtra(EXTRA_ALL_PAGES, 0);
-        int bookCurrenPage = intent.getIntExtra(EXTRA_CURRENT_PAGE, 0);
-        double bookProgressCalc =
-                100.0 /
-                        (Double.valueOf(bookAllPages) /
-                                Double.valueOf(bookCurrenPage));
-        df = new DecimalFormat("###.#");
-        String bookProgress = df.format(bookProgressCalc) + "%";
-
-        // Other calculations
-//        int pagesLeft =
-//                intent.getIntExtra(EXTRA_ALL_PAGES, 1) -
-//                        intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
-//        int daysLeft = pagesLeft / pagesPerDay;
-
-        // SET VALUES TO VIEW
-        viewTitle.setText(intent.getStringExtra(EXTRA_TITLE));
-        viewAuthor.setText(intent.getStringExtra(EXTRA_AUTHOR));
-        viewYear.setText(intent.getStringExtra(EXTRA_YEAR));
-        viewAllPages.setText(String.valueOf(intent.getIntExtra(EXTRA_ALL_PAGES, 0)));
-        viewCurrentPage.setText(String.valueOf(intent.getIntExtra(EXTRA_CURRENT_PAGE, 0)));
-        viewProgress.setText(bookProgress);
-        viewDateAdded.setText(bookDateAdded);
-        viewDateLastPage.setText(bookDateLastPage);
-        viewPagesPerDay.setText(String.valueOf(pagesPerDay));
-        viewPagesLeft.setText(String.valueOf(0));
-        viewDaysLeft.setText(String.valueOf(0));
 
         // WHEN NEW PAGE ADDED..
         Button buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
@@ -215,5 +131,103 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
         }
+    }
+
+    private void prepareViews() {
+        viewTitle = findViewById(R.id.text_book_title);
+        viewAuthor = findViewById(R.id.text_book_author);
+        viewYear = findViewById(R.id.text_book_year);
+        viewAllPages = findViewById(R.id.text_book_all_pages);
+        viewProgress = findViewById(R.id.text_book_progress);
+        viewCurrentPage = findViewById(R.id.text_book_curent_page);
+        viewDateAdded = findViewById(R.id.text_book_date_added);
+        viewDateLastPage = findViewById(R.id.text_book_date_last_page);
+        viewPagesPerDay = findViewById(R.id.text_book_pages_per_day);
+        viewPagesLeft = findViewById(R.id.text_book_pages_left);
+        viewDaysLeft = findViewById(R.id.text_book_days_left);
+    }
+
+    private void formatDate(Book book) {
+        String a =  book.getDateAdded();
+        String b = book.getDateLastPage();
+        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+        Date dateA = null;
+        Date dateB = null;
+        try {
+            dateA = parser.parse(a);
+            dateB = parser.parse(b);
+        } catch (Exception e) {
+
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+        this.bookDateAdded = formatter.format(dateA);
+        this.bookDateLastPage = formatter.format(dateB);
+    }
+
+    private void calculateStats(Book book) {
+        // CALCULATE PAGES PER DAY
+        this.daysSpent = new Long(0L);
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
+            Date firstDate = sdf.parse(book.getDateAdded());
+            Date secondDate = sdf.parse(book.getDateLastPage());
+            long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            this.daysSpent = diff;
+        } catch (Exception e) {
+
+        }
+
+//        int tempPage = thisBook[0].getCurrentPage();
+//        int pagesPerDay = 0;
+//        if ((int) daysSpent > 0 && tempPage > 0) {
+//            pagesPerDay =
+//                    thisBook[0].getCurrentPage() / (int) daysSpent;
+//            if (pagesPerDay < 1) {
+//                pagesPerDay = 1;
+//            }
+//        }
+
+//        int cPage = thisBook[0].getCurrentPage();
+//        int cPage = intent.getIntExtra(EXTRA_CURRENT_PAGE, 1);
+        int cPage = book.getCurrentPage();
+
+        this.pagesPerDay = 1;
+        if ((int) this.daysSpent > 0 && cPage > 0) {
+            this.pagesPerDay =
+                    cPage / (int) this.daysSpent;
+            if (this.pagesPerDay < 1) {
+                this.pagesPerDay = 1;
+            }
+        }
+
+        // CALCULATE PROGRESS
+        bookAllPages = book.getAllPages();
+        int bookCurrenPage = book.getCurrentPage();
+
+        double bookProgressCalc =
+                100.0 /
+                        (Double.valueOf(bookAllPages) /
+                                Double.valueOf(bookCurrenPage));
+        df = new DecimalFormat("###.#");
+        this.bookProgress = df.format(bookProgressCalc) + "%";
+
+        // PAGES LEFT, DAYS LEFT
+        this.pagesLeft= book.getAllPages() - book.getCurrentPage();
+        this.daysLeft = this.pagesLeft / this.pagesPerDay;
+    }
+
+    private void setValues(Book book) {
+        viewTitle.setText(book.getTitle());
+        viewAuthor.setText(book.getAuthor());
+        viewYear.setText(book.getYear());
+        viewAllPages.setText(String.valueOf(book.getAllPages()));
+        viewCurrentPage.setText(String.valueOf(book.getCurrentPage()));
+        viewProgress.setText(bookProgress);
+        viewDateAdded.setText(bookDateAdded);
+        viewDateLastPage.setText(bookDateLastPage);
+        viewPagesPerDay.setText(String.valueOf(this.pagesPerDay));
+        viewPagesLeft.setText(String.valueOf(this.pagesLeft));
+        viewDaysLeft.setText(String.valueOf(this.daysLeft));
     }
 }
