@@ -53,8 +53,8 @@ public class AddBookActivity extends AppCompatActivity {
         int allPages = Integer.parseInt(editTextAllPages.getText().toString());
         String currentDate = c.getTime().toString();
 
-        // TODO: Determine Optional and Required fields
-        // TODO: Check if fields have proper types
+        // TODO: Determine Optional and Required fields. Check if fields have
+        //  proper types
 
         if (title.trim().isEmpty() || author.trim().isEmpty()) {
             Toast.makeText(this, "Fields are empty.", Toast.LENGTH_SHORT).show();

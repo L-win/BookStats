@@ -8,12 +8,9 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-//TODO: RENAME NOTEASYNCTASK TO BOOK
-
 public class BookRepository {
     private BookDao bookDao;
     private LiveData<List<Book>> allBooks;
-    private LiveData<Book> singleBook;
 
     public BookRepository(Application application) {
         BookDatabase bookDatabase = BookDatabase.getInstance(application);
@@ -22,19 +19,19 @@ public class BookRepository {
     }
 
     public void insert(Book book) {
-        new InsertNoteAsyncTask(bookDao).execute(book);
+        new InsertBookAsyncTask(bookDao).execute(book);
     }
 
     public void update(Book book) {
-        new UpdateNoteAsyncTask(bookDao).execute(book);
+        new UpdateBookAsyncTask(bookDao).execute(book);
     }
 
     public void delete(Book book) {
-        new DeleteNoteAsyncTask(bookDao).execute(book);
+        new DeleteBookAsyncTask(bookDao).execute(book);
     }
 
     public void deleteAllBooks() {
-        new DeleteAllNoteAsyncTask(bookDao).execute();
+        new DeleteAllBookAsyncTask(bookDao).execute();
     }
 
     public LiveData<List<Book>> getAllBooks() {
@@ -43,21 +40,18 @@ public class BookRepository {
 
     public LiveData<Book> getSingleBook(int id) {
         LiveData<Book> book = null;
-        try{
+        try {
             book = new GetSingleBookAsyncTask(bookDao).execute(id).get();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return book;
     }
-    public LiveData<Book> asyncResult(LiveData<Book> book){
-        return this.singleBook = book;
-    }
 
-    private static class InsertNoteAsyncTask extends AsyncTask<Book, Void, Void> {
+    private static class InsertBookAsyncTask extends AsyncTask<Book, Void, Void> {
         private BookDao bookDao;
 
-        private InsertNoteAsyncTask(BookDao bookDao) {
+        private InsertBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -68,10 +62,10 @@ public class BookRepository {
         }
     }
 
-    private static class UpdateNoteAsyncTask extends AsyncTask<Book, Void, Void> {
+    private static class UpdateBookAsyncTask extends AsyncTask<Book, Void, Void> {
         private BookDao bookDao;
 
-        private UpdateNoteAsyncTask(BookDao bookDao) {
+        private UpdateBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -82,10 +76,10 @@ public class BookRepository {
         }
     }
 
-    private static class DeleteNoteAsyncTask extends AsyncTask<Book, Void, Void> {
+    private static class DeleteBookAsyncTask extends AsyncTask<Book, Void, Void> {
         private BookDao bookDao;
 
-        private DeleteNoteAsyncTask(BookDao bookDao) {
+        private DeleteBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -96,10 +90,10 @@ public class BookRepository {
         }
     }
 
-    private static class DeleteAllNoteAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class DeleteAllBookAsyncTask extends AsyncTask<Void, Void, Void> {
         private BookDao bookDao;
 
-        private DeleteAllNoteAsyncTask(BookDao bookDao) {
+        private DeleteAllBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
 
@@ -110,44 +104,20 @@ public class BookRepository {
         }
     }
 
-    private static class GetSingleBookAsyncTask extends  AsyncTask<Integer,Void,
-            LiveData<Book>>{
+    private static class GetSingleBookAsyncTask extends AsyncTask<Integer, Void,
+            LiveData<Book>> {
         private BookDao bookDao;
-//        private LiveData<Book> book;
 
         private GetSingleBookAsyncTask(BookDao bookDao) {
             this.bookDao = bookDao;
         }
+
         @Override
         protected LiveData<Book> doInBackground(Integer... id) {
-//            bookDao.deleteAllBooks();
             LiveData<Book> book = bookDao.getSingleBook(id[0]);
             return book;
         }
 
     }
-
-
-//    private static class GetSingleBookAsyncTask extends  AsyncTask<Integer,Void,
-//            Void>{
-//        private BookDao bookDao;
-//        private LiveData<Book> book;
-//
-//        private GetSingleBookAsyncTask(BookDao bookDao) {
-//            this.bookDao = bookDao;
-//        }
-//        @Override
-//        protected Void doInBackground(Integer... id) {
-////            bookDao.deleteAllBooks();
-//            this.book = bookDao.getSingleBook(id[0]);
-//            return null;
-//        }
-//        @Override
-//        protected void onPostExecute(Void result) {
-//            //do stuff
-//            asyncResult(myValue);
-//        }
-//
-//    }
 }
 
