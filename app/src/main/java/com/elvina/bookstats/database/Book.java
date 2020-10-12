@@ -16,6 +16,7 @@ public class Book {
     private String year;
     private int currentPage;
     private int allPages;
+    private int status;
 
     public Book(String title, String author, String dateAdded, String year, int allPages) {
         this.title = title;
@@ -76,5 +77,13 @@ public class Book {
 
     public int getCurrentPage() {
         return this.currentPage;
+    }
+
+    public void setStatus(int status){
+        this.status = status;
+    }
+
+    public int getStatus(){
+        return this.status;
     }
 }

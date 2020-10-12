@@ -50,14 +50,13 @@ public class AddBookActivity extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String author = editTextAuthor.getText().toString();
         String year = editTextYear.getText().toString();
-        int allPages = Integer.parseInt(editTextAllPages.getText().toString());
+        String allPages =
+                editTextAllPages.getText().toString();
         String currentDate = c.getTime().toString();
 
-        // TODO: Determine Optional and Required fields. Check if fields have
-        //  proper types
-
-        if (title.trim().isEmpty() || author.trim().isEmpty()) {
-            Toast.makeText(this, "Fields are empty.", Toast.LENGTH_SHORT).show();
+        if (title.trim().isEmpty() || editTextAllPages.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Required fields are empty.",
+                    Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -66,7 +65,7 @@ public class AddBookActivity extends AppCompatActivity {
         data.putExtra(EXTRA_AUTHOR, author);
         data.putExtra(EXTRA_YEAR, year);
         data.putExtra(EXTRA_DATE_ADDED, currentDate);
-        data.putExtra(EXTRA_ALL_PAGES, allPages);
+        data.putExtra(EXTRA_ALL_PAGES, Integer.parseInt(allPages));
 
         setResult(RESULT_OK, data);
         finish();

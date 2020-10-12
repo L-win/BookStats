@@ -11,16 +11,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-
-        >
+        android:layout_margin="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-
             android:orientation="vertical">
 
             <ImageView
@@ -30,7 +27,7 @@
                 android:layout_margin="15dp"
                 android:background="@drawable/view_book_book_cover"
                 android:padding="5dp"
-                tools:src="@tools:sample/avatars"/>
+                tools:src="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/text_book_title"
@@ -71,7 +68,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -105,8 +102,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -132,8 +129,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -149,16 +146,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="Days Left" />
+                    android:text="Days Left"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -177,8 +174,8 @@
                     android:id="@+id/text_book_days_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="v" />
+                    android:text="v"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -189,7 +186,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -201,8 +198,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -213,17 +209,16 @@
                     android:id="@+id/text_book_date_added"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v"
+                    android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"/>
+                    android:text="v" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -234,9 +229,9 @@
                     android:id="@+id/text_book_date_last_page"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v"
+                    android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp"/>
+                    android:text="v" />
             </LinearLayout>
 
         </LinearLayout>
