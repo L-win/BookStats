@@ -63,14 +63,14 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         intent = getIntent();
 
+        // PREPARE VIEWS
+        prepareViews();
+
         viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
         viewBookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID, 1)).observe(this,
                 new Observer<Book>() {
                     @Override
                     public void onChanged(Book book) {
-
-                        // PREPARE VIEWS
-                        prepareViews();
 
                         // PREPARE DATES
                         formatDate(book);
@@ -93,6 +93,17 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             @Override
             public void onClick(View v) {
                 openDialog();
+            }
+        });
+
+        Button buttonEditBook = findViewById(R.id.button_edit_book);
+        buttonEditBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentEdit = new Intent(ViewBookActivity.this,
+                        EditBookActivity.class);
+                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+                startActivity(intentEdit);
             }
         });
     }

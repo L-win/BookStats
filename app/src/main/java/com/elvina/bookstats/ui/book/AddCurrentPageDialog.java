@@ -7,23 +7,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.elvina.bookstats.R;
-import com.elvina.bookstats.database.Book;
-import com.elvina.bookstats.database.BookViewModel;
 
 public class AddCurrentPageDialog extends AppCompatDialogFragment {
 
     private EditText editTextCurrentPage;
-    private CheckBox checkboxBookStatus;
     private AddCurrentPageDialogListener listener;
 
     @NonNull
@@ -57,7 +52,6 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
                 });
 
         editTextCurrentPage = view.findViewById(R.id.edit_text_current_page);
-        checkboxBookStatus = view.findViewById(R.id.checkbox_book_status);
 
         return builder.create();
     }
