@@ -42,7 +42,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
     TextView viewTitle, viewAuthor, viewYear, viewAllPages, viewCurrentPage,
             viewProgress, viewDateAdded, viewDateLastPage, viewPagesPerDay,
-            viewPagesLeft, viewDaysLeft;
+            viewPagesLeft, viewDaysLeft, viewReadingStatus;
 
     Intent intent;
 
@@ -119,8 +119,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
             // INSERT TO DATABASE
             Book book = new Book(this.newBook.getTitle(),
-                    this.newBook.getAuthor(),this.newBook.getDateAdded(),
-                    this.newBook.getYear(),this.newBook.getAllPages());
+                    this.newBook.getAuthor(), this.newBook.getDateAdded(),
+                    this.newBook.getYear(), this.newBook.getAllPages());
             book.setId(this.newBook.getId());
             book.setDateLastPage(dateLastPage);
             book.setCurrentPage(currentPage);
@@ -128,7 +128,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
-        }else {
+        } else {
             Toast.makeText(this, "wrong input", Toast.LENGTH_LONG).show();
         }
     }
@@ -145,10 +145,11 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewPagesPerDay = findViewById(R.id.text_book_pages_per_day);
         viewPagesLeft = findViewById(R.id.text_book_pages_left);
         viewDaysLeft = findViewById(R.id.text_book_days_left);
+        viewReadingStatus = findViewById(R.id.text_book_reading_status);
     }
 
     private void formatDate(Book book) {
-        String a =  book.getDateAdded();
+        String a = book.getDateAdded();
         String b = book.getDateLastPage();
         SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         Date dateA = null;
@@ -179,12 +180,16 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         }
 
-        int cPage = book.getCurrentPage();
+//        int cPage = book.getCurrentPage();
 
         this.pagesPerDay = 1;
-        if ((int) this.daysSpent > 0 && cPage > 0) {
+
+        if (this.daysSpent == 0) {
+            this.daysSpent = 1;
+        }
+        if (book.getCurrentPage() > 0) {
             this.pagesPerDay =
-                    cPage / (int) this.daysSpent;
+                    book.getCurrentPage() / (int) this.daysSpent;
             if (this.pagesPerDay < 1) {
                 this.pagesPerDay = 1;
             }
@@ -201,8 +206,11 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         this.bookProgress = df.format(bookProgressCalc) + "%";
 
         // PAGES LEFT, DAYS LEFT
-        this.pagesLeft= book.getAllPages() - book.getCurrentPage();
+        this.pagesLeft = book.getAllPages() - book.getCurrentPage();
         this.daysLeft = this.pagesLeft / this.pagesPerDay;
+        if (this.daysLeft == 0) {
+            this.daysLeft = 1;
+        }
     }
 
     private void setValues(Book book) {
@@ -217,9 +225,14 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewPagesPerDay.setText(String.valueOf(this.pagesPerDay));
         viewPagesLeft.setText(String.valueOf(this.pagesLeft));
         viewDaysLeft.setText(String.valueOf(this.daysLeft));
+        if (book.getReadingStatus() == 0) {
+            viewReadingStatus.setText("Finished");
+        } else {
+            viewReadingStatus.setText("Reading");
+        }
     }
 
-    private void setNewBook(Book book){
+    private void setNewBook(Book book) {
         this.newBook = book;
     }
 }

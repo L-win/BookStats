@@ -16,7 +16,7 @@ public class Book {
     private String year;
     private int currentPage;
     private int allPages;
-    private int status;
+    private int readingStatus;
 
     public Book(String title, String author, String dateAdded, String year, int allPages) {
         this.title = title;
@@ -25,6 +25,7 @@ public class Book {
         this.dateAdded = dateAdded;
         this.allPages = allPages;
         this.dateLastPage = dateAdded;
+        this.readingStatus = 1;
     }
 
     public void setId(int id) {
@@ -79,11 +80,11 @@ public class Book {
         return this.currentPage;
     }
 
-    public void setStatus(int status){
-        this.status = status;
+    public void setReadingStatus(int status){
+        this.readingStatus = status;
     }
 
-    public int getStatus(){
-        return this.status;
+    public int getReadingStatus(){
+        return this.readingStatus;
     }
 }

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.elvina.bookstats.database.BookViewModel;
 public class AddCurrentPageDialog extends AppCompatDialogFragment {
 
     private EditText editTextCurrentPage;
+    private CheckBox checkboxBookStatus;
     private AddCurrentPageDialogListener listener;
 
     @NonNull
@@ -43,12 +45,19 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        int currentPage = Integer.parseInt(editTextCurrentPage.getText().toString());
-                        listener.applyTexts(currentPage);
+                        if(editTextCurrentPage.getText().toString().trim().isEmpty()){
+                            Toast.makeText(getActivity(), "field is empty",
+                                    Toast.LENGTH_SHORT).show();
+                        }else{
+                            int currentPage = Integer.parseInt(editTextCurrentPage.getText().toString());
+                            listener.applyTexts(currentPage);
+                        }
+
                     }
                 });
 
         editTextCurrentPage = view.findViewById(R.id.edit_text_current_page);
+        checkboxBookStatus = view.findViewById(R.id.checkbox_book_status);
 
         return builder.create();
     }
