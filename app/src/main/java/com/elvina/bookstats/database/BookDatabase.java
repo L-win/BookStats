@@ -43,18 +43,24 @@ public abstract class BookDatabase extends RoomDatabase {
         }
         @Override
         protected Void doInBackground(Void... voids){
-            bookDao.insert(new Book(
+            Book bookA = new Book(
                     "War and Peace",
                     "Leo Tolstoy",
                     "Thu Sep 28 20:21:30 UTC 2020",
                     "1867",
-                    1600));
-            bookDao.insert(new Book(
+                    1600);
+            bookA.setCoverUri("");
+            bookDao.insert(bookA);
+
+            Book bookB = new Book(
                     "Crime and Punishment",
                     "Fedor Dostoevsky",
                     "Thu Sep 15 20:21:30 UTC 2020",
                     "1866",
-                    750));
+                    750);
+            bookB.setCoverUri("");
+            bookDao.insert(bookB);
+
             return null;
         }
     }

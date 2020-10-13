@@ -14,6 +14,7 @@ public class Book {
     private String dateAdded;
     private String dateLastPage;
     private String year;
+    private String coverUri;
     private int currentPage;
     private int allPages;
     // True is Reading
@@ -81,11 +82,18 @@ public class Book {
         return this.currentPage;
     }
 
-    public void setReadingStatus(boolean status){
+    public void setReadingStatus(boolean status) {
         this.readingStatus = status;
     }
 
-    public boolean getReadingStatus(){
+    public boolean getReadingStatus() {
         return this.readingStatus;
+    }
+
+    public void setCoverUri(String uri) {
+        this.coverUri = uri;
+    }
+    public String getCoverUri(){
+        return this.coverUri;
     }
 }

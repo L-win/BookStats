@@ -104,7 +104,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                 Intent intentEdit = new Intent(ViewBookActivity.this,
                         EditBookActivity.class);
                 intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-//                startActivity(intentEdit);
                 startActivityForResult(intentEdit,1);
             }
         });
