@@ -57,6 +57,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_view_book);
 
         setTitle("Book Details");
@@ -103,7 +104,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                 Intent intentEdit = new Intent(ViewBookActivity.this,
                         EditBookActivity.class);
                 intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-                startActivity(intentEdit);
+//                startActivity(intentEdit);
+                startActivityForResult(intentEdit,1);
             }
         });
     }
@@ -236,7 +238,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewPagesPerDay.setText(String.valueOf(this.pagesPerDay));
         viewPagesLeft.setText(String.valueOf(this.pagesLeft));
         viewDaysLeft.setText(String.valueOf(this.daysLeft));
-        if (book.getReadingStatus() == 0) {
+        if (!book.getReadingStatus()) {
             viewReadingStatus.setText("Finished");
         } else {
             viewReadingStatus.setText("Reading");

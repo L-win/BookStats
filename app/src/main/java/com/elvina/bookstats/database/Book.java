@@ -16,7 +16,8 @@ public class Book {
     private String year;
     private int currentPage;
     private int allPages;
-    private int readingStatus;
+    // True is Reading
+    private boolean readingStatus;
 
     public Book(String title, String author, String dateAdded, String year, int allPages) {
         this.title = title;
@@ -25,7 +26,7 @@ public class Book {
         this.dateAdded = dateAdded;
         this.allPages = allPages;
         this.dateLastPage = dateAdded;
-        this.readingStatus = 1;
+        this.readingStatus = false;
     }
 
     public void setId(int id) {
@@ -80,11 +81,11 @@ public class Book {
         return this.currentPage;
     }
 
-    public void setReadingStatus(int status){
+    public void setReadingStatus(boolean status){
         this.readingStatus = status;
     }
 
-    public int getReadingStatus(){
+    public boolean getReadingStatus(){
         return this.readingStatus;
     }
 }

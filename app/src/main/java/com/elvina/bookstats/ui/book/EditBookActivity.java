@@ -6,8 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,25 +27,43 @@ public class EditBookActivity extends AppCompatActivity {
     EditText viewTitle, viewAuthor, viewYear, viewPages;
     SwitchCompat viewReadStatus;
 
+    String dateAdded;
+    int bookId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_book);
 
         Intent intent = getIntent();
+        bookId = intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1);
 
         prepareViews();
-//        editBookViewModel =
-//                new ViewModelProvider(this).get(EditBookViewModel.class);
         viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
-        viewBookViewModel.getSingleBook(intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1)).observe(this, new Observer<Book>() {
+        viewBookViewModel
+                .getSingleBook(bookId)
+                .observe(this, new Observer<Book>() {
             @Override
             public void onChanged(Book book) {
                 setValues(book);
             }
         });
 
-//        viewReadStatus.isChecked();
+        Button saveNewBook = findViewById(R.id.button_save_new_book);
+        saveNewBook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Book newBook = getValues();
+                viewBookViewModel.update(newBook);
+                Toast.makeText(
+                        EditBookActivity.this,
+                        "updated",
+                        Toast.LENGTH_SHORT).show();
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_CANCELED, returnIntent);
+                finish();
+            }
+        });
 
     }
 
@@ -59,10 +80,25 @@ public class EditBookActivity extends AppCompatActivity {
         viewAuthor.setText(book.getAuthor());
         viewYear.setText(book.getYear());
         viewPages.setText(String.valueOf(book.getAllPages()));
-        if(book.getReadingStatus() == 0){
-            viewReadStatus.setChecked(true);
-        }else if (book.getReadingStatus() == 1){
-            viewReadStatus.setChecked(false);
-        }
+        viewReadStatus.setChecked(!book.getReadingStatus());
+        dateAdded = book.getDateAdded();
+    }
+
+    private Book getValues(){
+        String newTitle = viewTitle.getText().toString();
+        String newAuthor = viewAuthor.getText().toString();
+        String newYear = viewYear.getText().toString();
+        String newPages = viewPages.getText().toString();
+        boolean readingStatus = viewReadStatus.isChecked();
+        Book newBook = new Book(
+                newTitle,
+                newAuthor,
+                dateAdded,
+                newYear,
+                Integer.parseInt(newPages)
+                );
+        newBook.setId(bookId);
+        newBook.setReadingStatus(!readingStatus);
+        return newBook;
     }
 }
