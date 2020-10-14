@@ -108,7 +108,7 @@ public class EditBookActivity extends AppCompatActivity {
         dateAdded = book.getDateAdded();
         this.coverUri = book.getCoverUri();
 
-        Toast.makeText(this, "2 " + this.coverUri, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "2 " + this.coverUri, Toast.LENGTH_SHORT).show();
 
         if (!this.coverUri.isEmpty()) {
             Uri imageUri = Uri.parse(this.coverUri);
@@ -164,48 +164,50 @@ public class EditBookActivity extends AppCompatActivity {
                     .centerCrop()
                     .into(viewImage);
 
-            // TEST2
-
-            createImage(imageUri);
-
-            Toast.makeText(this, "2 " + imageUri.toString(), Toast.LENGTH_SHORT).show();
+//            createImage(imageUri);
+            writeCoverToFile(createCover(imageUri));
         }
     }
 
-    private void createImage(Uri uri) {
-//        BitmapDrawable drawable = (BitmapDrawable) viewImage.getDrawable();
-        Bitmap bitmap = null;
+    private Bitmap createCover(Uri uri) {
+        Bitmap bookCover = null;
         try {
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            bookCover = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
         } catch (Exception e) {
-            System.out.println("MY EXCEPTION: Bitmap exception");
+            System.out.println("TEST-0: bitmap exception " + e);
         }
+        return bookCover;
+    }
 
+    private void writeCoverToFile(Bitmap coverImage) {
         File filePath = Environment.getExternalStorageDirectory();
-        File dir = new File(filePath.getAbsolutePath() + "/BookStats/");
+        File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
         dir.mkdir();
-        File file = new File(filePath+"/", "1" + ".jpg");
-
-        System.out.println("MY EXCEPTION: TEST-1 " + filePath.toString());
-        System.out.println("MY EXCEPTION: TEST-2 " + dir.toString());
-        System.out.println("MY EXCEPTION: TEST-3 " + file.toString());
+        File file = new File(dir, viewTitle.getText().toString().replace(" ","_") + ".jpg");
 
         try {
             outputStream = new FileOutputStream(file);
         } catch (Exception e) {
-            System.out.println("MY EXCEPTION: Output exception");
+            System.out.println("TEST-0: Output exception: " + e);
         }
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-//
-//        try {
-//            outputStream.flush();
-//        } catch (Exception e) {
-//
-//        }
-//        try {
-//            outputStream.close();
-//        } catch (Exception e) {
-//
-//        }
+        coverImage.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+
+        try {
+            outputStream.flush();
+        } catch (Exception e) {
+
+        }
+        try {
+            outputStream.close();
+        } catch (Exception e) {
+
+        }
     }
+
+//    private void createImage(Uri uri) {
+//
+//        Bitmap cover = createCover(uri);
+//        writeCoverToFile(cover);
+//
+//    }
 }

@@ -5,9 +5,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,9 +18,11 @@ import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
 import com.elvina.bookstats.database.ViewBookViewModel;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,6 +48,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     TextView viewTitle, viewAuthor, viewYear, viewAllPages, viewCurrentPage,
             viewProgress, viewDateAdded, viewDateLastPage, viewPagesPerDay,
             viewPagesLeft, viewDaysLeft, viewReadingStatus;
+
+    ImageView viewCoverImage;
 
     Intent intent;
 
@@ -158,6 +165,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewPagesLeft = findViewById(R.id.text_book_pages_left);
         viewDaysLeft = findViewById(R.id.text_book_days_left);
         viewReadingStatus = findViewById(R.id.text_book_reading_status);
+        viewCoverImage = findViewById(R.id.image_book_cover);
     }
 
     private void formatDate(Book book) {
@@ -242,6 +250,21 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         } else {
             viewReadingStatus.setText("Reading");
         }
+
+        File filePath = Environment.getExternalStorageDirectory();
+        File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
+        File file = new File(dir,
+                book.getTitle().replace(" ","_") + ".jpg");
+
+        if (file.exists()){
+            Picasso.get().invalidate(file);
+            Picasso.get()
+                    .load(file)
+                    .resize(400, 550)
+                    .centerCrop()
+                    .into(viewCoverImage);
+        }
+
     }
 
     private void setNewBook(Book book) {
