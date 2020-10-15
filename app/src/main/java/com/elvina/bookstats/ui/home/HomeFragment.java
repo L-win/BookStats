@@ -20,14 +20,13 @@ import com.elvina.bookstats.ui.book.AddBookActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.ui.book.ViewBookActivity;
 import com.elvina.bookstats.database.Book;
-import com.elvina.bookstats.database.BookViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private BookViewModel bookViewModel;
+    private HomeViewModel homeViewModel;
 
     private FloatingActionButton buttonAddBook;
 
@@ -52,8 +51,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter((adapter));
 
         // VIEWMODEL
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-        bookViewModel.getAllBooks().observe(getViewLifecycleOwner(), new Observer<List<Book>>() {
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel.getAllBooks().observe(
+                getViewLifecycleOwner(),
+                new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.submitList(books);
@@ -65,16 +66,22 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(Book book) {
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
-                intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
-                intent.putExtra(ViewBookActivity.EXTRA_TITLE, book.getTitle());
-                intent.putExtra(ViewBookActivity.EXTRA_AUTHOR, book.getAuthor());
-                intent.putExtra(ViewBookActivity.EXTRA_YEAR, book.getYear());
-                intent.putExtra(ViewBookActivity.EXTRA_DATE_ADDED, book.getDateAdded());
-                intent.putExtra(ViewBookActivity.EXTRA_ALL_PAGES, book.getAllPages());
-                intent.putExtra(ViewBookActivity.EXTRA_CURRENT_PAGE, book.getCurrentPage());
-                intent.putExtra(ViewBookActivity.EXTRA_DATE_LAST_PAGE,
-                        book.getDateLastPage());
-//                Toast.makeText(getActivity(), "int: "+book.getAllPages(), Toast.LENGTH_SHORT).show();
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_ID, book.getId());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_TITLE, book.getTitle());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_AUTHOR, book.getAuthor());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_YEAR, book.getYear());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_DATE_ADDED, book.getDateAdded());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_ALL_PAGES, book.getAllPages());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_CURRENT_PAGE, book.getCurrentPage());
+                intent.putExtra(
+                        ViewBookActivity.EXTRA_DATE_LAST_PAGE, book.getDateLastPage());
                 startActivity(intent);
             }
         });
@@ -93,7 +100,7 @@ public class HomeFragment extends Fragment {
             int allPages = data.getIntExtra(AddBookActivity.EXTRA_ALL_PAGES, 1);
 
             Book book = new Book(title, author, dateAdded, year, allPages);
-            bookViewModel.insert(book);
+            homeViewModel.insert(book);
             Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();
 
         }

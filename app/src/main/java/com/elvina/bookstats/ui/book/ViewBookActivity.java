@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -16,18 +15,13 @@ import android.widget.Toast;
 
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
-import com.elvina.bookstats.database.BookViewModel;
-import com.elvina.bookstats.database.ViewBookViewModel;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -75,8 +69,9 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         prepareViews();
 
         viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
-        viewBookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID, 1)).observe(this,
-                new Observer<Book>() {
+        viewBookViewModel
+                .getSingleBook(intent.getIntExtra(EXTRA_ID, 1))
+                .observe(this, new Observer<Book>() {
                     @Override
                     public void onChanged(Book book) {
 
@@ -111,7 +106,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                 Intent intentEdit = new Intent(ViewBookActivity.this,
                         EditBookActivity.class);
                 intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-                startActivityForResult(intentEdit,1);
+                startActivityForResult(intentEdit, 1);
             }
         });
     }
@@ -127,7 +122,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
             // CALCULATE NEW PROGRESS
             double bookNewProgressCalc =
-                    100.0 / (Double.valueOf(this.newBook.getAllPages()) / Double.valueOf(currentPage));
+                    100.0 / (Double.valueOf(this.newBook.getAllPages()) /
+                            Double.valueOf(currentPage));
             String bookNewProgress = df.format(bookNewProgressCalc) + "%";
 
             // SET NEW VALUES
@@ -257,9 +253,9 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         File filePath = Environment.getExternalStorageDirectory();
         File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
         File file = new File(dir,
-                book.getTitle().replace(" ","_") + ".jpg");
+                book.getTitle().replace(" ", "_") + ".jpg");
 
-        if (file.exists()){
+        if (file.exists()) {
             Picasso.get().invalidate(file);
             Picasso.get()
                     .load(file)

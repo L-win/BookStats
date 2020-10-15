@@ -3,15 +3,12 @@ package com.elvina.bookstats.ui.book;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.media.browse.MediaBrowser;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,8 +21,6 @@ import android.widget.Toast;
 
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
-import com.elvina.bookstats.database.EditBookViewModel;
-import com.elvina.bookstats.database.ViewBookViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -34,14 +29,14 @@ import java.io.OutputStream;
 
 public class EditBookActivity extends AppCompatActivity {
 
+    ViewBookViewModel viewBookViewModel;
     EditBookViewModel editBookViewModel;
-    EditBookViewModel viewBookViewModel;
 
     EditText viewTitle, viewAuthor, viewYear, viewPages;
     SwitchCompat viewReadStatus;
     ImageView viewImage;
 
-    String dateAdded, coverUri;
+    String dateAdded, coverUri, dateLastPage;
     int bookId, currentPage;
 
     OutputStream outputStream;
@@ -57,8 +52,8 @@ public class EditBookActivity extends AppCompatActivity {
         bookId = intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1);
 
         prepareViews();
-        viewBookViewModel = new ViewModelProvider(this).get(EditBookViewModel.class);
-        viewBookViewModel
+        editBookViewModel = new ViewModelProvider(this).get(EditBookViewModel.class);
+        editBookViewModel
                 .getSingleBook(bookId)
                 .observe(this, new Observer<Book>() {
                     @Override
@@ -72,8 +67,11 @@ public class EditBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Book newBook = getValues();
-                viewBookViewModel.update(newBook);
-                Toast.makeText(EditBookActivity.this, "updated", Toast.LENGTH_SHORT).show();
+                editBookViewModel.update(newBook);
+                Toast.makeText(
+                        EditBookActivity.this,
+                        "updated",
+                        Toast.LENGTH_SHORT).show();
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
@@ -108,8 +106,7 @@ public class EditBookActivity extends AppCompatActivity {
         dateAdded = book.getDateAdded();
         currentPage = book.getCurrentPage();
         this.coverUri = book.getCoverUri();
-
-//        Toast.makeText(this, "2 " + this.coverUri, Toast.LENGTH_SHORT).show();
+        this.dateLastPage = book.getDateLastPage();
 
         if (this.coverUri != null) {
             Uri imageUri = Uri.parse(this.coverUri);
@@ -140,11 +137,9 @@ public class EditBookActivity extends AppCompatActivity {
         newBook.setCoverUri(this.coverUri);
         newBook.setReadingStatus(!readingStatus);
         newBook.setCurrentPage(this.currentPage);
+        newBook.setDateLastPage(this.dateLastPage);
         return newBook;
     }
-
-    // TODO: IMAGE SELECTOR
-    // TEST1
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -158,14 +153,12 @@ public class EditBookActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
-//            this.coverUri = imageUri.toString();
             Picasso.get()
                     .load(imageUri)
                     .resize(400, 550)
                     .centerCrop()
                     .into(viewImage);
 
-//            createImage(imageUri);
             writeCoverToFile(createCover(imageUri));
         }
     }
@@ -205,10 +198,4 @@ public class EditBookActivity extends AppCompatActivity {
         }
     }
 
-//    private void createImage(Uri uri) {
-//
-//        Bitmap cover = createCover(uri);
-//        writeCoverToFile(cover);
-//
-//    }
 }

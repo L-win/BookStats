@@ -1,4 +1,4 @@
-package com.elvina.bookstats.database;
+package com.elvina.bookstats.ui.home;
 
 import android.app.Application;
 
@@ -6,14 +6,17 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.elvina.bookstats.database.Book;
+import com.elvina.bookstats.database.BookRepository;
+
 import java.util.List;
 
-public class BookViewModel extends AndroidViewModel {
+public class HomeViewModel extends AndroidViewModel {
 
     private BookRepository repository;
     private LiveData<List<Book>> allBooks;
 
-    public BookViewModel(@NonNull Application application) {
+    public HomeViewModel(@NonNull Application application) {
         super(application);
         repository = new BookRepository(application);
         allBooks = repository.getAllBooks();

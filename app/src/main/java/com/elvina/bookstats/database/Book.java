@@ -20,7 +20,10 @@ public class Book {
     // True is Reading
     private boolean readingStatus;
 
-    public Book(String title, String author, String dateAdded, String year, int allPages) {
+    public Book(
+            String title, String author,
+            String dateAdded, String year,
+            int allPages) {
         this.title = title;
         this.author = author;
         this.year = year;

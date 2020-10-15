@@ -1,4 +1,4 @@
-package com.elvina.bookstats.database;
+package com.elvina.bookstats.ui.book;
 
 import android.app.Application;
 
@@ -6,17 +6,22 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-public class EditBookViewModel extends AndroidViewModel {
+import com.elvina.bookstats.database.Book;
+import com.elvina.bookstats.database.BookRepository;
+
+public class ViewBookViewModel extends AndroidViewModel {
 
     private BookRepository repository;
 
-    public EditBookViewModel(@NonNull Application application) {
+    public ViewBookViewModel(@NonNull Application application) {
         super(application);
         repository = new BookRepository(application);
     }
+
     public void update(Book book) {
         repository.update(book);
     }
+
     public LiveData<Book> getSingleBook(int id) {
         return repository.getSingleBook(id);
     }

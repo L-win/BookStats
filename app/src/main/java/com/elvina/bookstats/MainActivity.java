@@ -3,7 +3,7 @@ package com.elvina.bookstats;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.elvina.bookstats.database.BookViewModel;
+import com.elvina.bookstats.ui.home.HomeViewModel;
 import com.elvina.bookstats.ui.finishedbooks.FinishedBooksFragment;
 import com.elvina.bookstats.ui.home.HomeFragment;
 import com.elvina.bookstats.ui.statistics.StatisticsFragment;
@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private BookViewModel bookViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
