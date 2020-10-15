@@ -14,6 +14,9 @@ public class EditBookViewModel extends AndroidViewModel {
         super(application);
         repository = new BookRepository(application);
     }
+    public void update(Book book) {
+        repository.update(book);
+    }
     public LiveData<Book> getSingleBook(int id) {
         return repository.getSingleBook(id);
     }

@@ -2,27 +2,16 @@ package com.elvina.bookstats;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookViewModel;
-import com.elvina.bookstats.ui.book.AddCurrentPageDialog;
-import com.elvina.bookstats.ui.dashboard.DashboardFragment;
+import com.elvina.bookstats.ui.finishedbooks.FinishedBooksFragment;
 import com.elvina.bookstats.ui.home.HomeFragment;
-import com.elvina.bookstats.ui.notifications.NotificationsFragment;
+import com.elvina.bookstats.ui.statistics.StatisticsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setItemHorizontalTranslationEnabled(false);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
 
     }
@@ -48,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment = new HomeFragment();
                     break;
                 case R.id.navigation_dashboard:
-                    selectedFragment = new DashboardFragment();
+                    selectedFragment = new FinishedBooksFragment();
                     break;
                 case R.id.navigation_notifications:
-                    selectedFragment = new NotificationsFragment();
+                    selectedFragment = new StatisticsFragment();
                     break;
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
@@ -59,4 +49,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+
+
 }

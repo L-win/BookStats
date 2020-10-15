@@ -123,7 +123,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
     @Override
     public void applyTexts(int currentPage) {
-        if (currentPage > this.newBook.getCurrentPage()) {
+        if (currentPage <= this.newBook.getAllPages()) {
 
             // CALCULATE NEW PROGRESS
             double bookNewProgressCalc =
@@ -137,9 +137,12 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             String dateLastPage = Calendar.getInstance().getTime().toString();
 
             // INSERT TO DATABASE
-            Book book = new Book(this.newBook.getTitle(),
-                    this.newBook.getAuthor(), this.newBook.getDateAdded(),
-                    this.newBook.getYear(), this.newBook.getAllPages());
+            Book book = new Book(
+                    this.newBook.getTitle(),
+                    this.newBook.getAuthor(),
+                    this.newBook.getDateAdded(),
+                    this.newBook.getYear(),
+                    this.newBook.getAllPages());
             book.setId(this.newBook.getId());
             book.setDateLastPage(dateLastPage);
             book.setCurrentPage(currentPage);

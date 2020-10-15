@@ -27,7 +27,7 @@ public class Book {
         this.dateAdded = dateAdded;
         this.allPages = allPages;
         this.dateLastPage = dateAdded;
-        this.readingStatus = false;
+        this.readingStatus = true;
     }
 
     public void setId(int id) {

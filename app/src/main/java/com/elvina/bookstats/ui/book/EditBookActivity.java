@@ -35,14 +35,14 @@ import java.io.OutputStream;
 public class EditBookActivity extends AppCompatActivity {
 
     EditBookViewModel editBookViewModel;
-    ViewBookViewModel viewBookViewModel;
+    EditBookViewModel viewBookViewModel;
 
     EditText viewTitle, viewAuthor, viewYear, viewPages;
     SwitchCompat viewReadStatus;
     ImageView viewImage;
 
     String dateAdded, coverUri;
-    int bookId;
+    int bookId, currentPage;
 
     OutputStream outputStream;
 
@@ -57,7 +57,7 @@ public class EditBookActivity extends AppCompatActivity {
         bookId = intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1);
 
         prepareViews();
-        viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
+        viewBookViewModel = new ViewModelProvider(this).get(EditBookViewModel.class);
         viewBookViewModel
                 .getSingleBook(bookId)
                 .observe(this, new Observer<Book>() {
@@ -75,7 +75,7 @@ public class EditBookActivity extends AppCompatActivity {
                 viewBookViewModel.update(newBook);
                 Toast.makeText(EditBookActivity.this, "updated", Toast.LENGTH_SHORT).show();
                 Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_CANCELED, returnIntent);
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });
@@ -106,11 +106,12 @@ public class EditBookActivity extends AppCompatActivity {
         viewPages.setText(String.valueOf(book.getAllPages()));
         viewReadStatus.setChecked(!book.getReadingStatus());
         dateAdded = book.getDateAdded();
+        currentPage = book.getCurrentPage();
         this.coverUri = book.getCoverUri();
 
 //        Toast.makeText(this, "2 " + this.coverUri, Toast.LENGTH_SHORT).show();
 
-        if (!this.coverUri.isEmpty()) {
+        if (this.coverUri != null) {
             Uri imageUri = Uri.parse(this.coverUri);
             Picasso.get()
                     .load(imageUri)
@@ -138,7 +139,7 @@ public class EditBookActivity extends AppCompatActivity {
         newBook.setId(this.bookId);
         newBook.setCoverUri(this.coverUri);
         newBook.setReadingStatus(!readingStatus);
-
+        newBook.setCurrentPage(this.currentPage);
         return newBook;
     }
 
@@ -157,7 +158,7 @@ public class EditBookActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
-            this.coverUri = imageUri.toString();
+//            this.coverUri = imageUri.toString();
             Picasso.get()
                     .load(imageUri)
                     .resize(400, 550)
