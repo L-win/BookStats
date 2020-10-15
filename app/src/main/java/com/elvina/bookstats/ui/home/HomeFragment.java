@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment {
     private FloatingActionButton buttonAddBook;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
         buttonAddBook = root.findViewById(R.id.button_add_book);
@@ -61,27 +62,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // ON CLICK
+        // ON CLICK ADAPTER
         adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Book book) {
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_ID, book.getId());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_TITLE, book.getTitle());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_AUTHOR, book.getAuthor());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_YEAR, book.getYear());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_DATE_ADDED, book.getDateAdded());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_ALL_PAGES, book.getAllPages());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_CURRENT_PAGE, book.getCurrentPage());
-                intent.putExtra(
-                        ViewBookActivity.EXTRA_DATE_LAST_PAGE, book.getDateLastPage());
+                intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
+
                 startActivity(intent);
             }
         });

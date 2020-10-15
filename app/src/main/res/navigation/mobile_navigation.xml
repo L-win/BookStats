@@ -15,11 +15,11 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.elvina.bookstats.ui.finishedbooks.FinishedBooksFragment"
         android:label="@string/title_finished"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_finished_books" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.elvina.bookstats.ui.statistics.StatisticsFragment"
         android:label="@string/title_statistics"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_statistics" />
 </navigation>

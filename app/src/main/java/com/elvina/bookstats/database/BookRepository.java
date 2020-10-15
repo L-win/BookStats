@@ -48,6 +48,16 @@ public class BookRepository {
         return book;
     }
 
+    public LiveData<List<Book>> getAllFinishedBooks() {
+        LiveData<List<Book>> books = null;
+        try {
+            books = new GetAllFinishedBooksAsyncTask(bookDao).execute().get();
+        } catch (Exception e) {
+            System.out.println("TEST-0: finished books asynctask exception: " + e);
+        }
+        return books;
+    }
+
     private static class InsertBookAsyncTask extends AsyncTask<Book, Void, Void> {
         private BookDao bookDao;
 
@@ -118,6 +128,21 @@ public class BookRepository {
             return book;
         }
 
+    }
+
+    private static class GetAllFinishedBooksAsyncTask extends AsyncTask<Void, Void, LiveData<List<Book>>> {
+        private BookDao bookDao;
+
+        private GetAllFinishedBooksAsyncTask(BookDao bookDao) {
+            this.bookDao = bookDao;
+        }
+
+        @Override
+        protected LiveData<List<Book>> doInBackground(Void... voids) {
+//            LiveData<Book> book = bookDao.getSingleBook(id[0]);
+            LiveData<List<Book>> books = bookDao.getAllFinishedBooks();
+            return books;
+        }
     }
 }
 

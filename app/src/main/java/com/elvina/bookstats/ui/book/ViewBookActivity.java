@@ -28,14 +28,14 @@ import java.util.concurrent.TimeUnit;
 public class ViewBookActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener {
 
     public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
-    public static final String EXTRA_TITLE = "com.elvina.bookstats.EXTRA_TITLE";
-    public static final String EXTRA_AUTHOR = "com.elvina.bookstats.EXTRA_AUTHOR";
-    public static final String EXTRA_YEAR = "com.elvina.bookstats.EXTRA_YEAR";
-    public static final String EXTRA_DATE_ADDED = "com.elvina.bookstats.EXTRA_DATE_ADDED";
-    public static final String EXTRA_ALL_PAGES = "com.elvina.bookstats.EXTRA_ALL_PAGES";
-    public static final String EXTRA_CURRENT_PAGE = "com.elvina.bookstats.EXTRA_CURRENT_PAGES";
-    public static final String EXTRA_DATE_LAST_PAGE = "com.elvina.bookstats" +
-            ".EXTRA_DATE_LAST_PAGE";
+//    public static final String EXTRA_TITLE = "com.elvina.bookstats.EXTRA_TITLE";
+//    public static final String EXTRA_AUTHOR = "com.elvina.bookstats.EXTRA_AUTHOR";
+//    public static final String EXTRA_YEAR = "com.elvina.bookstats.EXTRA_YEAR";
+//    public static final String EXTRA_DATE_ADDED = "com.elvina.bookstats.EXTRA_DATE_ADDED";
+//    public static final String EXTRA_ALL_PAGES = "com.elvina.bookstats.EXTRA_ALL_PAGES";
+//    public static final String EXTRA_CURRENT_PAGE = "com.elvina.bookstats.EXTRA_CURRENT_PAGES";
+//    public static final String EXTRA_DATE_LAST_PAGE = "com.elvina.bookstats" +
+//            ".EXTRA_DATE_LAST_PAGE";
 
     ViewBookViewModel viewBookViewModel;
 
