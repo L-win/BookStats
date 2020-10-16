@@ -63,13 +63,13 @@ public class HomeFragment extends Fragment {
         homeViewModel.getAllBooks().observe(
                 getViewLifecycleOwner(),
                 new Observer<List<Book>>() {
-            @Override
-            public void onChanged(List<Book> books) {
-                adapter.submitList(books);
-                progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-        });
+                    @Override
+                    public void onChanged(List<Book> books) {
+                        adapter.submitList(books);
+                        progressBar.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                    }
+                });
 
         // ON CLICK ADAPTER
         adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
@@ -77,28 +77,27 @@ public class HomeFragment extends Fragment {
             public void onItemClick(Book book) {
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
                 intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
-
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
         return root;
     }
-//
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-//            String title = data.getStringExtra(AddBookActivity.EXTRA_TITLE);
-//            String author = data.getStringExtra(AddBookActivity.EXTRA_AUTHOR);
-//            String year = data.getStringExtra(AddBookActivity.EXTRA_YEAR);
-//            String dateAdded = data.getStringExtra(AddBookActivity.EXTRA_DATE_ADDED);
-//            int allPages = data.getIntExtra(AddBookActivity.EXTRA_ALL_PAGES, 1);
-//
-//            Book book = new Book(title, author, dateAdded, year, allPages);
-//            homeViewModel.insert(book);
-//            Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();
-//
-//        }
-//    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("TEST-1:");
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+
+            int id = data.getIntExtra(AddBookActivity.EXTRA_ID, 0);
+
+            Book book = new Book(null, null, null, null, 1);
+            book.setId(id);
+            System.out.println("TEST-2:" + id);
+            homeViewModel.delete(book);
+            Toast.makeText(getActivity(), "Deleted Book.", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 }

@@ -24,12 +24,12 @@ import java.util.Date;
 
 public class AddBookActivity extends AppCompatActivity {
 
-    //    public static final String EXTRA_ID = "com.example.myapplication.EXTRA_ID";
-    public static final String EXTRA_TITLE = "com.example.myapplication.EXTRA_TITLE";
-    public static final String EXTRA_AUTHOR = "com.example.myapplication.EXTRA_AUTHOR";
-    public static final String EXTRA_YEAR = "com.example.myapplication.EXTRA_YEAR";
-    public static final String EXTRA_DATE_ADDED = "com.example.myapplication.EXTRA_DATE_ADDED";
-    public static final String EXTRA_ALL_PAGES = "com.example.myapplication.EXTRA_ALL_PAGES";
+        public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
+    public static final String EXTRA_TITLE = "com.example.bookstats.EXTRA_TITLE";
+    public static final String EXTRA_AUTHOR = "com.example.bookstats.EXTRA_AUTHOR";
+    public static final String EXTRA_YEAR = "com.example.bookstats.EXTRA_YEAR";
+    public static final String EXTRA_DATE_ADDED = "com.example.bookstats.EXTRA_DATE_ADDED";
+    public static final String EXTRA_ALL_PAGES = "com.example.bookstats.EXTRA_ALL_PAGES";
 
 
     BookViewModel bookViewModel;

@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.elvina.bookstats.MainActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
 import com.squareup.picasso.Picasso;
@@ -73,26 +74,39 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         prepareViews();
 
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-        bookViewModel
-                .getSingleBook(intent.getIntExtra(EXTRA_ID, 1))
-                .observe(this, new Observer<Book>() {
-                    @Override
-                    public void onChanged(Book book) {
+//        bookViewModel
+//                .getSingleBook(intent.getIntExtra(EXTRA_ID, 1))
+//                .observe(this, new Observer<Book>() {
+//                    @Override
+//                    public void onChanged(Book book) {
+//
+//                            // PREPARE DATES
+//                            formatDate(book);
+//
+//                            // CALCULATE ALL STATS
+//                            calculateStats(book);
+//
+//                            // SET VALUES TO VIEW
+//                            setValues(book);
+//
+//                            // FOR ALERT DIALOG
+//                            setNewBook(book);
+//
+//                    }
+//                });
+        Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
 
-                        // PREPARE DATES
-                        formatDate(book);
+        // PREPARE DATES
+        formatDate(book);
 
-                        // CALCULATE ALL STATS
-                        calculateStats(book);
+        // CALCULATE ALL STATS
+        calculateStats(book);
 
-                        // SET VALUES TO VIEW
-                        setValues(book);
+        // SET VALUES TO VIEW
+        setValues(book);
 
-                        // FOR ALERT DIALOG
-                        setNewBook(book);
-
-                    }
-                });
+        // FOR ALERT DIALOG
+        setNewBook(book);
 
         // WHEN NEW PAGE ADDED..
         Button buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
@@ -274,6 +288,15 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         this.newBook = book;
     }
 
+    private void deleteBook() {
+        bookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID, 0)).removeObservers(this);
+        Intent data = new Intent();
+        data.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+        System.out.println("TEST-0:" + intent.getIntExtra(EXTRA_ID, 1));
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -291,8 +314,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                 startActivityForResult(intentEdit, 1);
                 return true;
             case R.id.delete_book:
-
-                return true;
+                deleteBook();
             default:
                 return super.onOptionsItemSelected(item);
         }

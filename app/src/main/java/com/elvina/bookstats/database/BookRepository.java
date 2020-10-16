@@ -58,6 +58,16 @@ public class BookRepository {
         return books;
     }
 
+    public Book getSingleBookMutable(int id){
+        Book book = null;
+        try {
+            book = new GetSingleBookMutableAsynctas(bookDao).execute(id).get();
+        } catch (Exception e) {
+
+        }
+        return book;
+    }
+
     private static class InsertBookAsyncTask extends AsyncTask<Book, Void, Void> {
         private BookDao bookDao;
 
@@ -142,6 +152,20 @@ public class BookRepository {
 //            LiveData<Book> book = bookDao.getSingleBook(id[0]);
             LiveData<List<Book>> books = bookDao.getAllFinishedBooks();
             return books;
+        }
+    }
+
+    private static class GetSingleBookMutableAsynctas extends AsyncTask<Integer,Void,Book>{
+        private BookDao bookDao;
+
+        private GetSingleBookMutableAsynctas(BookDao bookDao) {
+            this.bookDao = bookDao;
+        }
+
+        @Override
+        protected Book doInBackground(Integer... id) {
+            Book book = bookDao.getSingleBookMutable(id[0]);
+            return book;
         }
     }
 }
