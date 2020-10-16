@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,17 +35,23 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        buttonAddBook = root.findViewById(R.id.button_add_book);
-        buttonAddBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddBookActivity.class);
-                startActivityForResult(intent, 1);
-            }
-        });
+
+        // ADD BOOK BUTTON
+//        buttonAddBook = root.findViewById(R.id.button_add_book);
+//        buttonAddBook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), AddBookActivity.class);
+//                startActivityForResult(intent, 1);
+//            }
+//        });
+
+        // PROGRESS BAR
+        final ProgressBar progressBar = root.findViewById(R.id.progress_bar);
+
 
         // RECYCLERVIEW
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
@@ -59,6 +66,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Book> books) {
                 adapter.submitList(books);
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
         });
 

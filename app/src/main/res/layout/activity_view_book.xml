@@ -265,11 +265,11 @@
         android:layout_margin="10dp"
         android:text="Add Current Page" />
 
-    <Button
-        android:id="@+id/button_edit_book"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="edit book" />
+<!--    <Button-->
+<!--        android:id="@+id/button_edit_book"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:text="edit book" />-->
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.elvina.bookstats.ui.book;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -7,6 +8,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -99,16 +103,16 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             }
         });
 
-        Button buttonEditBook = findViewById(R.id.button_edit_book);
-        buttonEditBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentEdit = new Intent(ViewBookActivity.this,
-                        EditBookActivity.class);
-                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-                startActivityForResult(intentEdit, 1);
-            }
-        });
+//        Button buttonEditBook = findViewById(R.id.button_edit_book);
+//        buttonEditBook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intentEdit = new Intent(ViewBookActivity.this,
+//                        EditBookActivity.class);
+//                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+//                startActivityForResult(intentEdit, 1);
+//            }
+//        });
     }
 
     public void openDialog() {
@@ -269,4 +273,29 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     private void setNewBook(Book book) {
         this.newBook = book;
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.edit_book_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_book:
+                Intent intentEdit = new Intent(this,
+                        EditBookActivity.class);
+                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+                startActivityForResult(intentEdit, 1);
+                return true;
+            case R.id.delete_book:
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }
