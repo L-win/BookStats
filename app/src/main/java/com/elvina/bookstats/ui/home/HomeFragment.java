@@ -84,21 +84,21 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            String title = data.getStringExtra(AddBookActivity.EXTRA_TITLE);
-            String author = data.getStringExtra(AddBookActivity.EXTRA_AUTHOR);
-            String year = data.getStringExtra(AddBookActivity.EXTRA_YEAR);
-            String dateAdded = data.getStringExtra(AddBookActivity.EXTRA_DATE_ADDED);
-            int allPages = data.getIntExtra(AddBookActivity.EXTRA_ALL_PAGES, 1);
-
-            Book book = new Book(title, author, dateAdded, year, allPages);
-            homeViewModel.insert(book);
-            Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();
-
-        }
-    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+//            String title = data.getStringExtra(AddBookActivity.EXTRA_TITLE);
+//            String author = data.getStringExtra(AddBookActivity.EXTRA_AUTHOR);
+//            String year = data.getStringExtra(AddBookActivity.EXTRA_YEAR);
+//            String dateAdded = data.getStringExtra(AddBookActivity.EXTRA_DATE_ADDED);
+//            int allPages = data.getIntExtra(AddBookActivity.EXTRA_ALL_PAGES, 1);
+//
+//            Book book = new Book(title, author, dateAdded, year, allPages);
+//            homeViewModel.insert(book);
+//            Toast.makeText(getActivity(), "Added Book.", Toast.LENGTH_SHORT).show();
+//
+//        }
+//    }
 }

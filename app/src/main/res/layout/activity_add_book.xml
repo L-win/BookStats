@@ -55,8 +55,9 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:hint="number of pages"
-                android:inputType="textMultiLine"
-                android:padding="30sp" />
+                android:inputType="number"
+                android:padding="30sp"
+                />
 
         </LinearLayout>
 

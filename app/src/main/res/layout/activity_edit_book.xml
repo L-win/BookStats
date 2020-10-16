@@ -35,7 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="pages" />
+            android:hint="pages"
+            android:inputType="number"/>
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_reading_status"
             android:layout_width="match_parent"

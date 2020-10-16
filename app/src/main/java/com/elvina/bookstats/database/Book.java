@@ -96,7 +96,8 @@ public class Book {
     public void setCoverUri(String uri) {
         this.coverUri = uri;
     }
-    public String getCoverUri(){
+
+    public String getCoverUri() {
         return this.coverUri;
     }
 }

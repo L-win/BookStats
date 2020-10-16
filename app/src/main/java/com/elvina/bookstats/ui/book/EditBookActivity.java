@@ -29,8 +29,8 @@ import java.io.OutputStream;
 
 public class EditBookActivity extends AppCompatActivity {
 
-    ViewBookViewModel viewBookViewModel;
-    EditBookViewModel editBookViewModel;
+    BookViewModel bookViewModel;
+//    EditBookViewModel editBookViewModel;
 
     EditText viewTitle, viewAuthor, viewYear, viewPages;
     SwitchCompat viewReadStatus;
@@ -52,8 +52,8 @@ public class EditBookActivity extends AppCompatActivity {
         bookId = intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1);
 
         prepareViews();
-        editBookViewModel = new ViewModelProvider(this).get(EditBookViewModel.class);
-        editBookViewModel
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+        bookViewModel
                 .getSingleBook(bookId)
                 .observe(this, new Observer<Book>() {
                     @Override
@@ -67,7 +67,7 @@ public class EditBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Book newBook = getValues();
-                editBookViewModel.update(newBook);
+                bookViewModel.update(newBook);
                 Toast.makeText(
                         EditBookActivity.this,
                         "updated",

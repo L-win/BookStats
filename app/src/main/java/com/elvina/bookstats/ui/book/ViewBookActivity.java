@@ -41,7 +41,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 //    public static final String EXTRA_DATE_LAST_PAGE = "com.elvina.bookstats" +
 //            ".EXTRA_DATE_LAST_PAGE";
 
-    ViewBookViewModel viewBookViewModel;
+    BookViewModel bookViewModel;
 
     TextView viewTitle, viewAuthor, viewYear, viewAllPages, viewCurrentPage,
             viewProgress, viewDateAdded, viewDateLastPage, viewPagesPerDay,
@@ -72,8 +72,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         // PREPARE VIEWS
         prepareViews();
 
-        viewBookViewModel = new ViewModelProvider(this).get(ViewBookViewModel.class);
-        viewBookViewModel
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+        bookViewModel
                 .getSingleBook(intent.getIntExtra(EXTRA_ID, 1))
                 .observe(this, new Observer<Book>() {
                     @Override
@@ -146,7 +146,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             book.setId(this.newBook.getId());
             book.setDateLastPage(dateLastPage);
             book.setCurrentPage(currentPage);
-            viewBookViewModel.update(book);
+            bookViewModel.update(book);
 
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
