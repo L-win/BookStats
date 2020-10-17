@@ -1,10 +1,12 @@
 package com.elvina.bookstats.ui.book;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -117,16 +119,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             }
         });
 
-//        Button buttonEditBook = findViewById(R.id.button_edit_book);
-//        buttonEditBook.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intentEdit = new Intent(ViewBookActivity.this,
-//                        EditBookActivity.class);
-//                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-//                startActivityForResult(intentEdit, 1);
-//            }
-//        });
     }
 
     public void openDialog() {
@@ -138,29 +130,15 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     public void applyTexts(int currentPage) {
         if (currentPage <= this.newBook.getAllPages()) {
 
-            // CALCULATE NEW PROGRESS
-            double bookNewProgressCalc =
-                    100.0 / (Double.valueOf(this.newBook.getAllPages()) /
-                            Double.valueOf(currentPage));
-            String bookNewProgress = df.format(bookNewProgressCalc) + "%";
+            Book tempBook = newBook;
+            tempBook.setCurrentPage(currentPage);
+            tempBook.setDateLastPage(Calendar.getInstance().getTime().toString());
 
-            // SET NEW VALUES
-            this.viewCurrentPage.setText(String.valueOf(currentPage));
-            this.viewProgress.setText(bookNewProgress);
+            formatDate(tempBook);
+            calculateStats(tempBook);
+            setValues(tempBook);
 
-            String dateLastPage = Calendar.getInstance().getTime().toString();
-
-            // INSERT TO DATABASE
-            Book book = new Book(
-                    this.newBook.getTitle(),
-                    this.newBook.getAuthor(),
-                    this.newBook.getDateAdded(),
-                    this.newBook.getYear(),
-                    this.newBook.getAllPages());
-            book.setId(this.newBook.getId());
-            book.setDateLastPage(dateLastPage);
-            book.setCurrentPage(currentPage);
-            bookViewModel.update(book);
+            bookViewModel.update(tempBook);
 
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
@@ -197,6 +175,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         } catch (Exception e) {
 
         }
+
         SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
         this.bookDateAdded = formatter.format(dateA);
         this.bookDateLastPage = formatter.format(dateB);
@@ -217,8 +196,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         }
 
-//        int cPage = book.getCurrentPage();
-
         this.pagesPerDay = 1;
 
         if (this.daysSpent == 0) {
@@ -235,10 +212,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         // CALCULATE PROGRESS
         int bookCurrenPage = book.getCurrentPage();
 
-        double bookProgressCalc =
-                100.0 /
-                        (Double.valueOf(book.getAllPages()) /
-                                Double.valueOf(bookCurrenPage));
+        double bookProgressCalc = 100.0 / (Double.valueOf(book.getAllPages()) / Double.valueOf(bookCurrenPage));
         df = new DecimalFormat("###.#");
         this.bookProgress = df.format(bookProgressCalc) + "%";
 
@@ -289,7 +263,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     }
 
     private void deleteBook() {
-        bookViewModel.getSingleBook(intent.getIntExtra(EXTRA_ID, 0)).removeObservers(this);
         Intent data = new Intent();
         data.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
         System.out.println("TEST-0:" + intent.getIntExtra(EXTRA_ID, 1));
@@ -320,4 +293,13 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == Activity.RESULT_OK){
+            Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
+            setValues(book);
+            setNewBook(book);
+        }
+    }
 }

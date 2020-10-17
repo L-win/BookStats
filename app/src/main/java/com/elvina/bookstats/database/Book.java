@@ -21,15 +21,15 @@ public class Book {
     private boolean readingStatus;
 
     public Book(
-            String title, String author,
-            String dateAdded, String year,
-            int allPages) {
+            String title,
+            String author,
+            String year,
+            int allPages
+    ) {
         this.title = title;
         this.author = author;
         this.year = year;
-        this.dateAdded = dateAdded;
         this.allPages = allPages;
-        this.dateLastPage = dateAdded;
         this.readingStatus = true;
     }
 
@@ -42,6 +42,9 @@ public class Book {
     }
 
     public void setDateAdded(String dateAdded) {
+        if (this.dateLastPage == null){
+            this.dateLastPage = dateAdded;
+        }
         this.dateAdded = dateAdded;
     }
 

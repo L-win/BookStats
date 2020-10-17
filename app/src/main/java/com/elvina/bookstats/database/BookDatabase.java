@@ -46,19 +46,19 @@ public abstract class BookDatabase extends RoomDatabase {
             Book bookA = new Book(
                     "War and Peace",
                     "Leo Tolstoy",
-                    "Thu Sep 28 20:21:30 UTC 2020",
                     "1867",
                     1600);
             bookA.setCoverUri("");
+            bookA.setDateAdded("Thu Sep 28 20:21:30 UTC 2020");
             bookDao.insert(bookA);
 
             Book bookB = new Book(
                     "Crime and Punishment",
                     "Fedor Dostoevsky",
-                    "Thu Sep 15 20:21:30 UTC 2020",
                     "1866",
                     750);
             bookB.setCoverUri("");
+            bookB.setDateAdded("Thu Sep 15 20:21:30 UTC 2020");
             bookDao.insert(bookB);
 
             return null;

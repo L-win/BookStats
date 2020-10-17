@@ -81,7 +81,8 @@ public class AddBookActivity extends AppCompatActivity {
         // READ USER INPUT
         getValues();
 
-        Book book = new Book(title, author, currentDate, year, allPages);
+        Book book = new Book(title, author, year, allPages);
+        book.setDateAdded(currentDate);
         bookViewModel.insert(book);
 
 //        Intent data = new Intent();

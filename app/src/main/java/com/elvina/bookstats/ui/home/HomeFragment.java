@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
 
             int id = data.getIntExtra(AddBookActivity.EXTRA_ID, 0);
 
-            Book book = new Book(null, null, null, null, 1);
+            Book book = new Book(null, null, null, 1);
             book.setId(id);
             System.out.println("TEST-2:" + id);
             homeViewModel.delete(book);

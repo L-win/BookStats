@@ -129,11 +129,11 @@ public class EditBookActivity extends AppCompatActivity {
         Book newBook = new Book(
                 newTitle,
                 newAuthor,
-                dateAdded,
                 newYear,
                 Integer.parseInt(newPages)
         );
         newBook.setId(this.bookId);
+        newBook.setDateAdded(this.dateAdded);
         newBook.setCoverUri(this.coverUri);
         newBook.setReadingStatus(!readingStatus);
         newBook.setCurrentPage(this.currentPage);
@@ -177,7 +177,7 @@ public class EditBookActivity extends AppCompatActivity {
         File filePath = Environment.getExternalStorageDirectory();
         File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
         dir.mkdir();
-        File file = new File(dir, viewTitle.getText().toString().replace(" ","_") + ".jpg");
+        File file = new File(dir, viewTitle.getText().toString().replace(" ", "_") + ".jpg");
 
         try {
             outputStream = new FileOutputStream(file);
