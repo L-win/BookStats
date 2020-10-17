@@ -47,7 +47,6 @@ public class AddCurrentPageDialog extends AppCompatDialogFragment {
                             int currentPage = Integer.parseInt(editTextCurrentPage.getText().toString());
                             listener.applyTexts(currentPage);
                         }
-
                     }
                 });
 

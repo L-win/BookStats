@@ -7,6 +7,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 import com.elvina.bookstats.MainActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -60,6 +63,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     String bookDateAdded, bookDateLastPage, bookProgress;
     long daysSpent;
 
+    Button buttonAddCurrentPage;
+
     DecimalFormat df;
 
     @Override
@@ -78,6 +83,15 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
         Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
 
+        // WHEN NEW PAGE ADDED..
+        buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
+        buttonAddCurrentPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+
         // PREPARE DATES
         formatDate(book);
 
@@ -90,14 +104,9 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         // FOR ALERT DIALOG
         setNewBook(book);
 
-        // WHEN NEW PAGE ADDED..
-        Button buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
-        buttonAddCurrentPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-        });
+//        if(book.getReadingStatus() == false){
+//            buttonAddCurrentPage.setVisibility(View.GONE);
+//        }
 
     }
 
@@ -236,6 +245,12 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                     .into(viewCoverImage);
         }
 
+        if(book.getReadingStatus() == false){
+            buttonAddCurrentPage.setVisibility(View.GONE);
+        }else {
+            buttonAddCurrentPage.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setNewBook(Book book) {
@@ -243,11 +258,24 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     }
 
     private void deleteBook() {
-        Intent data = new Intent();
-        data.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-        System.out.println("TEST-0:" + intent.getIntExtra(EXTRA_ID, 1));
-        setResult(RESULT_OK, data);
-        finish();
+
+        new AlertDialog.Builder(this)
+                .setMessage("Delete book?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent data = new Intent();
+                        data.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+                        System.out.println("TEST-0:" + intent.getIntExtra(EXTRA_ID, 1));
+                        setResult(RESULT_OK, data);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                }).create().show();
+
     }
 
     @Override
