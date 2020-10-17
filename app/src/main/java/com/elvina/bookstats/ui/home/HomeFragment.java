@@ -24,13 +24,12 @@ import com.elvina.bookstats.ui.book.ViewBookActivity;
 import com.elvina.bookstats.database.Book;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     private HomeViewModel homeViewModel;
-
-    private FloatingActionButton buttonAddBook;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,9 +58,9 @@ public class HomeFragment extends Fragment {
                     public void onChanged(List<Book> books) {
                         progressBar.setVisibility(View.GONE);
                         adapter.submitList(books);
-                        if(books.isEmpty()){
+                        if (books.isEmpty()) {
                             textIfEmptyList.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             textIfEmptyList.setVisibility(View.GONE);
                             recyclerView.setVisibility(View.VISIBLE);
                         }
@@ -74,7 +73,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(Book book) {
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
-                intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
+                 intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
+                intent.putExtra("theBook", book);
+
                 startActivityForResult(intent, 1);
             }
         });
@@ -85,14 +86,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("TEST-1:");
+
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
 
             int id = data.getIntExtra(AddBookActivity.EXTRA_ID, 0);
 
             Book book = new Book(null, null, null, 1);
             book.setId(id);
-            System.out.println("TEST-2:" + id);
             homeViewModel.delete(book);
             Toast.makeText(getActivity(), "Deleted Book.", Toast.LENGTH_SHORT).show();
 

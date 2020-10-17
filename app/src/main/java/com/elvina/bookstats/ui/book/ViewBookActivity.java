@@ -52,39 +52,47 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     TextView viewTitle, viewAuthor, viewYear, viewAllPages, viewCurrentPage,
             viewProgress, viewDateAdded, viewDateLastPage, viewPagesPerDay,
             viewPagesLeft, viewDaysLeft, viewReadingStatus;
-
     ImageView viewCoverImage;
-
-    Intent intent;
-
-    Book newBook;
-
-    int pagesPerDay, pagesLeft, daysLeft;
-    String bookDateAdded, bookDateLastPage, bookProgress;
-    long daysSpent;
-
     Button buttonAddCurrentPage;
 
-    DecimalFormat df;
+    Book theBook;
+    int theBookId;
+
+    // FORMATTED AND CALCULATED
+    String bookDateAdded, bookDateLastPage, bookProgress;
+    int pagesPerDay, pagesLeft, daysLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_view_book);
 
         setTitle("Book Details");
 
-        intent = getIntent();
-
         // PREPARE VIEWS
         prepareViews();
 
-        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-        Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
+        // GET BOOK ID
+        Intent intent = getIntent();
+        theBookId = intent.getIntExtra(EXTRA_ID, 0);
+//        theBook = (Book) intent.getSerializableExtra("theBook");
+//        theBookId = theBook.getId();
 
-        // WHEN NEW PAGE ADDED..
-        buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
+//        System.out.println("TEST-1: " + theBook.getTitle());
+
+        // GET DATABASE
+        bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
+
+        // GET BOOK
+         theBook = bookViewModel.getSingleBookMutable(theBookId);
+
+        // PREPARE DATES
+        formatDate();
+
+        // CALCULATE ALL STATS
+        calculateStats();
+
+        // ADD CURRENT PAGE BUTTON
         buttonAddCurrentPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,21 +100,8 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             }
         });
 
-        // PREPARE DATES
-        formatDate(book);
-
-        // CALCULATE ALL STATS
-        calculateStats(book);
-
         // SET VALUES TO VIEW
-        setValues(book);
-
-        // FOR ALERT DIALOG
-        setNewBook(book);
-
-//        if(book.getReadingStatus() == false){
-//            buttonAddCurrentPage.setVisibility(View.GONE);
-//        }
+        setValues();
 
     }
 
@@ -117,17 +112,16 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
     @Override
     public void applyTexts(int currentPage) {
-        if (currentPage <= this.newBook.getAllPages()) {
+        if (currentPage <= this.theBook.getAllPages()) {
 
-            Book tempBook = newBook;
-            tempBook.setCurrentPage(currentPage);
-            tempBook.setDateLastPage(Calendar.getInstance().getTime().toString());
+            theBook.setCurrentPage(currentPage);
+            theBook.setDateLastPage(Calendar.getInstance().getTime().toString());
 
-            formatDate(tempBook);
-            calculateStats(tempBook);
-            setValues(tempBook);
+            formatDate();
+            calculateStats();
+            setValues();
 
-            bookViewModel.update(tempBook);
+            bookViewModel.update(theBook);
 
             Toast.makeText(this, "updated", Toast.LENGTH_SHORT).show();
 
@@ -150,11 +144,12 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewDaysLeft = findViewById(R.id.text_book_days_left);
         viewReadingStatus = findViewById(R.id.text_book_reading_status);
         viewCoverImage = findViewById(R.id.image_book_cover);
+        buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
     }
 
-    private void formatDate(Book book) {
-        String a = book.getDateAdded();
-        String b = book.getDateLastPage();
+    private void formatDate() {
+        String a = theBook.getDateAdded();
+        String b = theBook.getDateLastPage();
         SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
         Date dateA = null;
         Date dateB = null;
@@ -170,62 +165,63 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         this.bookDateLastPage = formatter.format(dateB);
     }
 
-    private void calculateStats(Book book) {
+    private void calculateStats() {
 
-        // CALCULATE PAGES PER DAY
-        this.daysSpent = new Long(0L);
+        // DAYS SPENT
+        long daysSpent;
+        daysSpent = new Long(0L);
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
-            Date firstDate = sdf.parse(book.getDateAdded());
-            Date secondDate = sdf.parse(book.getDateLastPage());
+            Date firstDate = sdf.parse(theBook.getDateAdded());
+            Date secondDate = sdf.parse(theBook.getDateLastPage());
             long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
             long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            this.daysSpent = diff;
+            daysSpent = diff;
         } catch (Exception e) {
 
         }
 
+        // PAGES PER DAY
         this.pagesPerDay = 1;
 
-        if (this.daysSpent == 0) {
-            this.daysSpent = 1;
+        if (daysSpent == 0) {
+            daysSpent = 1;
         }
-        if (book.getCurrentPage() > 0) {
-            this.pagesPerDay =
-                    book.getCurrentPage() / (int) this.daysSpent;
+        if (theBook.getCurrentPage() > 0) {
+            this.pagesPerDay = theBook.getCurrentPage() / (int) daysSpent;
             if (this.pagesPerDay < 1) {
                 this.pagesPerDay = 1;
             }
         }
 
         // CALCULATE PROGRESS
-        int bookCurrenPage = book.getCurrentPage();
+        int bookCurrenPage = theBook.getCurrentPage();
 
-        double bookProgressCalc = 100.0 / (Double.valueOf(book.getAllPages()) / Double.valueOf(bookCurrenPage));
-        df = new DecimalFormat("###.#");
+        double bookProgressCalc = 100.0 / (Double.valueOf(theBook.getAllPages()) / Double.valueOf(bookCurrenPage));
+        DecimalFormat df = new DecimalFormat("###.#");
         this.bookProgress = df.format(bookProgressCalc) + "%";
 
         // PAGES LEFT, DAYS LEFT
-        this.pagesLeft = book.getAllPages() - book.getCurrentPage();
+        this.pagesLeft = theBook.getAllPages() - theBook.getCurrentPage();
         this.daysLeft = this.pagesLeft / this.pagesPerDay;
         if (this.daysLeft == 0) {
             this.daysLeft = 1;
         }
     }
 
-    private void setValues(Book book) {
-        viewTitle.setText(book.getTitle());
-        viewAuthor.setText(book.getAuthor());
-        viewYear.setText(book.getYear());
-        viewAllPages.setText(String.valueOf(book.getAllPages()));
-        viewCurrentPage.setText(String.valueOf(book.getCurrentPage()));
+    private void setValues() {
+        viewTitle.setText(theBook.getTitle());
+        viewAuthor.setText(theBook.getAuthor());
+        viewYear.setText(theBook.getYear());
+        viewAllPages.setText(String.valueOf(theBook.getAllPages()));
+        viewCurrentPage.setText(String.valueOf(theBook.getCurrentPage()));
         viewProgress.setText(this.bookProgress);
         viewDateAdded.setText(this.bookDateAdded);
         viewDateLastPage.setText(this.bookDateLastPage);
         viewPagesPerDay.setText(String.valueOf(this.pagesPerDay));
         viewPagesLeft.setText(String.valueOf(this.pagesLeft));
         viewDaysLeft.setText(String.valueOf(this.daysLeft));
-        if (!book.getReadingStatus()) {
+        if (!theBook.getReadingStatus()) {
             viewReadingStatus.setText("Finished");
         } else {
             viewReadingStatus.setText("Reading");
@@ -234,7 +230,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         File filePath = Environment.getExternalStorageDirectory();
         File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
         File file = new File(dir,
-                book.getTitle().replace(" ", "_") + ".jpg");
+                theBook.getTitle().replace(" ", "_") + ".jpg");
 
         if (file.exists()) {
             Picasso.get().invalidate(file);
@@ -245,16 +241,12 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                     .into(viewCoverImage);
         }
 
-        if(book.getReadingStatus() == false){
+        if (!theBook.getReadingStatus()) {
             buttonAddCurrentPage.setVisibility(View.GONE);
-        }else {
+        } else {
             buttonAddCurrentPage.setVisibility(View.VISIBLE);
         }
 
-    }
-
-    private void setNewBook(Book book) {
-        this.newBook = book;
     }
 
     private void deleteBook() {
@@ -264,8 +256,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent data = new Intent();
-                        data.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
-                        System.out.println("TEST-0:" + intent.getIntExtra(EXTRA_ID, 1));
+                        data.putExtra(EXTRA_ID, theBookId);
                         setResult(RESULT_OK, data);
                         finish();
                     }
@@ -291,7 +282,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             case R.id.edit_book:
                 Intent intentEdit = new Intent(this,
                         EditBookActivity.class);
-                intentEdit.putExtra(EXTRA_ID, intent.getIntExtra(EXTRA_ID, 1));
+                intentEdit.putExtra(EXTRA_ID, theBookId);
                 startActivityForResult(intentEdit, 1);
                 return true;
             case R.id.delete_book:
@@ -304,10 +295,9 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == Activity.RESULT_OK){
-            Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
-            setValues(book);
-            setNewBook(book);
+        if (resultCode == Activity.RESULT_OK) {
+            theBook = bookViewModel.getSingleBookMutable(theBookId);
+            setValues();
         }
     }
 }
