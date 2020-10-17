@@ -6,4 +6,8 @@
 
     <color name="appBackground">#FFFFFF</color>
     <color name="cardBackground">#F8EEBE</color>
+
+    <color name="buttonAddPageText">#FFFFFF</color>
+    <color name="buttonAddPageBackground">#77DC7C</color>
+
 </resources>

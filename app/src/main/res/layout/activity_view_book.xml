@@ -260,16 +260,12 @@
 
     <Button
         android:id="@+id/button_add_current_page"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="Add Current Page" />
-
-<!--    <Button-->
-<!--        android:id="@+id/button_edit_book"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_margin="10dp"-->
-<!--        android:text="edit book" />-->
-
+        android:padding="15dp"
+        android:layout_gravity="center"
+        android:text="Add Current Page"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/buttonAddPageText"
+        />
 </LinearLayout>

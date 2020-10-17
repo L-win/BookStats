@@ -76,26 +76,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         prepareViews();
 
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
-//        bookViewModel
-//                .getSingleBook(intent.getIntExtra(EXTRA_ID, 1))
-//                .observe(this, new Observer<Book>() {
-//                    @Override
-//                    public void onChanged(Book book) {
-//
-//                            // PREPARE DATES
-//                            formatDate(book);
-//
-//                            // CALCULATE ALL STATS
-//                            calculateStats(book);
-//
-//                            // SET VALUES TO VIEW
-//                            setValues(book);
-//
-//                            // FOR ALERT DIALOG
-//                            setNewBook(book);
-//
-//                    }
-//                });
         Book book = bookViewModel.getSingleBookMutable(intent.getIntExtra(EXTRA_ID, 0));
 
         // PREPARE DATES

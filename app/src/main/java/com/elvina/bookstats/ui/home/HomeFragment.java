@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,20 +36,11 @@ public class HomeFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
-        // ADD BOOK BUTTON
-//        buttonAddBook = root.findViewById(R.id.button_add_book);
-//        buttonAddBook.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), AddBookActivity.class);
-//                startActivityForResult(intent, 1);
-//            }
-//        });
-
         // PROGRESS BAR
         final ProgressBar progressBar = root.findViewById(R.id.progress_bar);
 
+        // TEXT IF LIST IS EMPTY
+        final TextView textIfEmptyList = root.findViewById(R.id.text_empty_list);
 
         // RECYCLERVIEW
         final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -65,11 +57,17 @@ public class HomeFragment extends Fragment {
                 new Observer<List<Book>>() {
                     @Override
                     public void onChanged(List<Book> books) {
-                        adapter.submitList(books);
                         progressBar.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
+                        adapter.submitList(books);
+                        if(books.isEmpty()){
+                            textIfEmptyList.setVisibility(View.VISIBLE);
+                        }else {
+                            textIfEmptyList.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
+
 
         // ON CLICK ADAPTER
         adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {

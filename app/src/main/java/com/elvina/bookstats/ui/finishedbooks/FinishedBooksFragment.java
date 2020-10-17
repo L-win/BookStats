@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,6 +34,9 @@ public class FinishedBooksFragment extends Fragment {
         // PROGRESS BAR
         final ProgressBar progressBar = root.findViewById(R.id.progress_bar);
 
+        // TEXT IF LIST IS EMPTY
+        final TextView textIfEmptyList = root.findViewById(R.id.text_empty_list);
+
         // RECYCLERVIEW
         final RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -50,7 +54,13 @@ public class FinishedBooksFragment extends Fragment {
                     public void onChanged(List<Book> books) {
                         adapter.submitList(books);
                         progressBar.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
+
+                        if(books.isEmpty()){
+                            textIfEmptyList.setVisibility(View.VISIBLE);
+                        }else {
+                            textIfEmptyList.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
 

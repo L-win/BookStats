@@ -13,23 +13,23 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/book_adapter"
         android:background="@color/appBackground"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        tools:listitem="@layout/book_adapter" />
 
-<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--        android:id="@+id/button_add_book"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom|end"-->
-<!--        android:layout_marginBottom="60dp"-->
-<!--        android:layout_marginRight="30dp"-->
+    <TextView
+        android:id="@+id/text_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="empty"/>
 
-<!--        android:src="@drawable/ic_add" />-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
