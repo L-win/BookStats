@@ -4,62 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        tools:context=".ui.book.AddBookActivity">
+
+        <EditText
+            android:id="@+id/edit_text_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".ui.book.AddBookActivity"
-            android:layout_margin="10dp"
-            >
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="title"
+            android:inputType="textMultiLine" />
 
-            <EditText
-                android:id="@+id/edit_text_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="title"
-                android:inputType="textMultiLine"
-                android:padding="30sp" />
+        <EditText
+            android:id="@+id/edit_text_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="author (optional)"
+            android:inputType="textMultiLine" />
 
-            <EditText
-                android:id="@+id/edit_text_author"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="author (optional)"
-                android:inputType="textMultiLine"
-                android:padding="30sp" />
+        <EditText
+            android:id="@+id/edit_text_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="year (optional)"
+            android:inputType="textMultiLine" />
 
-            <EditText
-                android:id="@+id/edit_text_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="year (optional)"
-                android:inputType="textMultiLine"
-                android:padding="30sp" />
+        <EditText
+            android:id="@+id/edit_text_all_pages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="number of pages"
+            android:inputType="number"
 
-            <EditText
-                android:id="@+id/edit_text_all_pages"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:hint="number of pages"
-                android:inputType="number"
-                android:padding="30sp"
-                />
+            />
 
-        </LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

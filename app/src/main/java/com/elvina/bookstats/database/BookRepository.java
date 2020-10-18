@@ -149,7 +149,6 @@ public class BookRepository {
 
         @Override
         protected LiveData<List<Book>> doInBackground(Void... voids) {
-//            LiveData<Book> book = bookDao.getSingleBook(id[0]);
             LiveData<List<Book>> books = bookDao.getAllFinishedBooks();
             return books;
         }

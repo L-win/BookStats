@@ -13,6 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,29 +65,6 @@ public class EditBookActivity extends AppCompatActivity {
                     }
                 });
 
-        Button saveNewBook = findViewById(R.id.button_save_new_book);
-        saveNewBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Book newBook = getValues();
-                bookViewModel.update(newBook);
-                Toast.makeText(
-                        EditBookActivity.this,
-                        "updated",
-                        Toast.LENGTH_SHORT).show();
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
-            }
-        });
-
-        Button changeBookCover = findViewById(R.id.button_book_cover_change);
-        changeBookCover.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openFileChooser();
-            }
-        });
     }
 
     private void prepareViews() {
@@ -195,6 +175,34 @@ public class EditBookActivity extends AppCompatActivity {
             outputStream.close();
         } catch (Exception e) {
 
+        }
+    }
+
+    private void saveBook(){
+        Book newBook = getValues();
+        bookViewModel.update(newBook);
+        Toast.makeText(
+                EditBookActivity.this,
+                "updated",
+                Toast.LENGTH_SHORT).show();
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.add_book_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.save_book:
+                saveBook();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

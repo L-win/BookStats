@@ -43,14 +43,6 @@ import java.util.concurrent.TimeUnit;
 public class ViewBookActivity extends AppCompatActivity implements AddCurrentPageDialog.AddCurrentPageDialogListener {
 
     public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
-//    public static final String EXTRA_TITLE = "com.elvina.bookstats.EXTRA_TITLE";
-//    public static final String EXTRA_AUTHOR = "com.elvina.bookstats.EXTRA_AUTHOR";
-//    public static final String EXTRA_YEAR = "com.elvina.bookstats.EXTRA_YEAR";
-//    public static final String EXTRA_DATE_ADDED = "com.elvina.bookstats.EXTRA_DATE_ADDED";
-//    public static final String EXTRA_ALL_PAGES = "com.elvina.bookstats.EXTRA_ALL_PAGES";
-//    public static final String EXTRA_CURRENT_PAGE = "com.elvina.bookstats.EXTRA_CURRENT_PAGES";
-//    public static final String EXTRA_DATE_LAST_PAGE = "com.elvina.bookstats" +
-//            ".EXTRA_DATE_LAST_PAGE";
 
     BookViewModel bookViewModel;
 
@@ -80,10 +72,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         // GET BOOK ID
         Intent intent = getIntent();
         theBookId = intent.getIntExtra(EXTRA_ID, 0);
-//        theBook = (Book) intent.getSerializableExtra("theBook");
-//        theBookId = theBook.getId();
-
-//        System.out.println("TEST-1: " + theBook.getTitle());
 
         // GET DATABASE
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
@@ -170,24 +158,9 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         this.bookDateAdded = result[0];
         this.bookDateLastPage = result[1];
 
-//        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-//        Date dateA = null;
-//        Date dateB = null;
-//        try {
-//            dateA = parser.parse(a);
-//            dateB = parser.parse(b);
-//        } catch (Exception e) {
-//
-//        }
-//
-//        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
-//        this.bookDateAdded = formatter.format(dateA);
-//        this.bookDateLastPage = formatter.format(dateB);
     }
 
     private void calculateStats() {
-
-        // days left(int) pages left(int) pages per day (int) progress(string)
 
         Integer[] result = new Integer[4];
         try {
@@ -295,8 +268,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         }
     }
 
-    // FORMAT DATE ASYNCTASK
-
     private static class FormatDateAsynctask extends AsyncTask<String, Void, String[]> {
 
         @Override
@@ -320,8 +291,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             return result;
         }
     }
-
-    // CALCULATE STAT ASYNCTASK
 
     private static class CalculateStatsAsyncTask extends AsyncTask<Void, Void, Integer[]> {
 

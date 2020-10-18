@@ -51,13 +51,6 @@
             android:layout_marginTop="10dp"
             android:text="Set Book cover"
             />
-        <Button
-            android:id="@+id/button_save_new_book"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="SAVE"
-            />
         <ImageView
             android:id="@+id/image_book_cover"
             android:layout_width="match_parent"

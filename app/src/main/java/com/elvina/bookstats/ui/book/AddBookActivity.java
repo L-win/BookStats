@@ -24,13 +24,7 @@ import java.util.Date;
 
 public class AddBookActivity extends AppCompatActivity {
 
-        public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
-    public static final String EXTRA_TITLE = "com.example.bookstats.EXTRA_TITLE";
-    public static final String EXTRA_AUTHOR = "com.example.bookstats.EXTRA_AUTHOR";
-    public static final String EXTRA_YEAR = "com.example.bookstats.EXTRA_YEAR";
-    public static final String EXTRA_DATE_ADDED = "com.example.bookstats.EXTRA_DATE_ADDED";
-    public static final String EXTRA_ALL_PAGES = "com.example.bookstats.EXTRA_ALL_PAGES";
-
+    public static final String EXTRA_ID = "com.elvina.bookstats.EXTRA_ID";
 
     BookViewModel bookViewModel;
 
@@ -51,7 +45,6 @@ public class AddBookActivity extends AppCompatActivity {
 
         // PREPARE INPUT FIELDS
         prepareViews();
-
 
     }
 
@@ -84,13 +77,6 @@ public class AddBookActivity extends AppCompatActivity {
         Book book = new Book(title, author, year, allPages);
         book.setDateAdded(currentDate);
         bookViewModel.insert(book);
-
-//        Intent data = new Intent();
-//        data.putExtra(EXTRA_TITLE, title);
-//        data.putExtra(EXTRA_AUTHOR, author);
-//        data.putExtra(EXTRA_YEAR, year);
-//        data.putExtra(EXTRA_DATE_ADDED, currentDate);
-//        data.putExtra(EXTRA_ALL_PAGES, Integer.parseInt(allPages));
 
         Toast.makeText(this, "Added Book.", Toast.LENGTH_SHORT).show();
         setResult(RESULT_CANCELED);

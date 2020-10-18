@@ -23,8 +23,11 @@ public class FinishedBooksViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Book>> getAllFinishedBooks() {
-
         return allFinishedBooks;
+    }
+
+    public void delete(Book book) {
+        repository.delete(book);
     }
 
 
