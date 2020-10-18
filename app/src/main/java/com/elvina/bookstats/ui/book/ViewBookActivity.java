@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -24,14 +25,18 @@ import android.widget.Toast;
 import com.elvina.bookstats.MainActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.database.Book;
+import com.elvina.bookstats.database.BookDao;
+import com.elvina.bookstats.database.BookRepository;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -84,8 +89,13 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         bookViewModel = new ViewModelProvider(this).get(BookViewModel.class);
 
         // GET BOOK
-         theBook = bookViewModel.getSingleBookMutable(theBookId);
+        theBook = bookViewModel.getSingleBookMutable(theBookId);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         // PREPARE DATES
         formatDate();
 
@@ -102,7 +112,6 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
 
         // SET VALUES TO VIEW
         setValues();
-
     }
 
     public void openDialog() {
@@ -148,65 +157,50 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
     }
 
     private void formatDate() {
-        String a = theBook.getDateAdded();
-        String b = theBook.getDateLastPage();
-        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
-        Date dateA = null;
-        Date dateB = null;
+
+        String[] input = {theBook.getDateAdded(), theBook.getDateLastPage()};
+
+        String[] result = new String[2];
         try {
-            dateA = parser.parse(a);
-            dateB = parser.parse(b);
+            result = new FormatDateAsynctask().execute(input).get();
         } catch (Exception e) {
 
         }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
-        this.bookDateAdded = formatter.format(dateA);
-        this.bookDateLastPage = formatter.format(dateB);
+        this.bookDateAdded = result[0];
+        this.bookDateLastPage = result[1];
+
+//        SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+//        Date dateA = null;
+//        Date dateB = null;
+//        try {
+//            dateA = parser.parse(a);
+//            dateB = parser.parse(b);
+//        } catch (Exception e) {
+//
+//        }
+//
+//        SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+//        this.bookDateAdded = formatter.format(dateA);
+//        this.bookDateLastPage = formatter.format(dateB);
     }
 
     private void calculateStats() {
 
-        // DAYS SPENT
-        long daysSpent;
-        daysSpent = new Long(0L);
+        // days left(int) pages left(int) pages per day (int) progress(string)
+
+        Integer[] result = new Integer[4];
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
-            Date firstDate = sdf.parse(theBook.getDateAdded());
-            Date secondDate = sdf.parse(theBook.getDateLastPage());
-            long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-            long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            daysSpent = diff;
+            result = new CalculateStatsAsyncTask(theBook).execute().get();
         } catch (Exception e) {
 
         }
 
-        // PAGES PER DAY
-        this.pagesPerDay = 1;
+        this.pagesPerDay = result[0];
+        this.pagesLeft = result[1];
+        this.daysLeft = result[2];
+        this.bookProgress = String.valueOf(result[3]);
 
-        if (daysSpent == 0) {
-            daysSpent = 1;
-        }
-        if (theBook.getCurrentPage() > 0) {
-            this.pagesPerDay = theBook.getCurrentPage() / (int) daysSpent;
-            if (this.pagesPerDay < 1) {
-                this.pagesPerDay = 1;
-            }
-        }
-
-        // CALCULATE PROGRESS
-        int bookCurrenPage = theBook.getCurrentPage();
-
-        double bookProgressCalc = 100.0 / (Double.valueOf(theBook.getAllPages()) / Double.valueOf(bookCurrenPage));
-        DecimalFormat df = new DecimalFormat("###.#");
-        this.bookProgress = df.format(bookProgressCalc) + "%";
-
-        // PAGES LEFT, DAYS LEFT
-        this.pagesLeft = theBook.getAllPages() - theBook.getCurrentPage();
-        this.daysLeft = this.pagesLeft / this.pagesPerDay;
-        if (this.daysLeft == 0) {
-            this.daysLeft = 1;
-        }
     }
 
     private void setValues() {
@@ -300,4 +294,92 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             setValues();
         }
     }
+
+    // FORMAT DATE ASYNCTASK
+
+    private static class FormatDateAsynctask extends AsyncTask<String, Void, String[]> {
+
+        @Override
+        protected String[] doInBackground(String[] input) {
+            String[] result = new String[2];
+
+            SimpleDateFormat parser = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+            Date dateA = null;
+            Date dateB = null;
+            try {
+                dateA = parser.parse(input[0]);
+                dateB = parser.parse(input[1]);
+            } catch (Exception e) {
+
+            }
+
+            SimpleDateFormat formatter = new SimpleDateFormat("MMMM dd, yyyy");
+            result[0] = formatter.format(dateA);
+            result[1] = formatter.format(dateB);
+
+            return result;
+        }
+    }
+
+    // CALCULATE STAT ASYNCTASK
+
+    private static class CalculateStatsAsyncTask extends AsyncTask<Void, Void, Integer[]> {
+
+        Book book;
+
+        CalculateStatsAsyncTask(Book book) {
+            this.book = book;
+        }
+
+        @Override
+        protected Integer[] doInBackground(Void... voids) {
+            Integer[] result = new Integer[4];
+            int pagesPerDay = 1;
+            int daysLeft, pagesLeft;
+
+            // DAYS SPENT
+            long daysSpent;
+            daysSpent = new Long(0L);
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy", Locale.ENGLISH);
+                Date firstDate = sdf.parse(book.getDateAdded());
+                Date secondDate = sdf.parse(book.getDateLastPage());
+                long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                daysSpent = diff;
+            } catch (Exception e) {
+            }
+
+            // PAGES PER DAY
+
+            if (daysSpent == 0) {
+                daysSpent = 1;
+            }
+            if (book.getCurrentPage() > 0) {
+                pagesPerDay = book.getCurrentPage() / (int) daysSpent;
+                if (pagesPerDay < 1) {
+                    pagesPerDay = 1;
+                }
+            }
+
+            // CALCULATE PROGRESS
+            int bookCurrenPage = book.getCurrentPage();
+            double bookProgressCalc = 100.0 / (Double.valueOf(book.getAllPages()) / Double.valueOf(bookCurrenPage));
+
+            // PAGES LEFT, DAYS LEFT
+            pagesLeft = book.getAllPages() - book.getCurrentPage();
+            daysLeft = pagesLeft / pagesPerDay;
+            if (daysLeft == 0) {
+                daysLeft = 1;
+            }
+
+            result[0] = pagesPerDay;
+            result[1] = pagesLeft;
+            result[2] = daysLeft;
+            result[3] = (int) bookProgressCalc;
+
+            return result;
+        }
+    }
+
 }
