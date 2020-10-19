@@ -81,5 +81,19 @@ public class HomeFragment extends Fragment{
         return root;
     }
 
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+
+            int id = data.getIntExtra(AddBookActivity.EXTRA_ID, 0);
+
+            Book book = new Book(null, null, null, 1);
+            book.setId(id);
+            homeViewModel.delete(book);
+            Toast.makeText(getActivity(), "Deleted Book.", Toast.LENGTH_SHORT).show();
+
+        }
+    }
 
 }
