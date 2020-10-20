@@ -67,7 +67,6 @@ public class HomeFragment extends Fragment{
                     }
                 });
 
-
         // ON CLICK ADAPTER
         adapter.setOnItemClickListener(new BookAdapter.OnItemClickListener() {
             @Override
