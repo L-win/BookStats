@@ -31,6 +31,7 @@ public class HomeFragment extends Fragment{
 
     private HomeViewModel homeViewModel;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -80,13 +81,11 @@ public class HomeFragment extends Fragment{
         return root;
     }
 
+    // DELETING BOOK
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-
             int id = data.getIntExtra(AddBookActivity.EXTRA_ID, 0);
-
             Book book = new Book(null, null, null, 1);
             book.setId(id);
             homeViewModel.delete(book);

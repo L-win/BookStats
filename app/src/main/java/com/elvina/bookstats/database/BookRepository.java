@@ -12,10 +12,18 @@ public class BookRepository {
     private BookDao bookDao;
     private LiveData<List<Book>> allBooks;
 
+    private StatisticsDao statisticsDao;
+    private List<Statistics> allStatistcs;
+
     public BookRepository(Application application) {
         BookDatabase bookDatabase = BookDatabase.getInstance(application);
         bookDao = bookDatabase.bookDao();
         allBooks = bookDao.getAllBooks();
+
+
+        // TODO: MAYBE WE NEED LIVE DATA?
+        statisticsDao = bookDatabase.statisticsDao();
+//        allStatistcs = statisticsDao.getAllStatistics();
     }
 
     public void insert(Book book) {
@@ -58,7 +66,7 @@ public class BookRepository {
         return books;
     }
 
-    public Book getSingleBookMutable(int id){
+    public Book getSingleBookMutable(int id) {
         Book book = null;
         try {
             book = new GetSingleBookMutableAsynctas(bookDao).execute(id).get();
@@ -154,7 +162,7 @@ public class BookRepository {
         }
     }
 
-    private static class GetSingleBookMutableAsynctas extends AsyncTask<Integer,Void,Book>{
+    private static class GetSingleBookMutableAsynctas extends AsyncTask<Integer, Void, Book> {
         private BookDao bookDao;
 
         private GetSingleBookMutableAsynctas(BookDao bookDao) {
@@ -167,5 +175,24 @@ public class BookRepository {
             return book;
         }
     }
+
+    // STATISTICS
+
+    // get stats
+
+    public List<Statistics> getAllStats() {
+        return null;
+    }
+
+    private static class GetAllStatisticsAsyncTask extends AsyncTask<Void, Void, List<Statistics>> {
+        @Override
+        protected List<Statistics> doInBackground(Void... voids) {
+            return null;
+        }
+    }
+
+    // update stats
+
+
 }
 
