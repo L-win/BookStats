@@ -38,6 +38,7 @@ public class Statistics {
     public void setValue(int value) {
         this.value = value;
     }
-;
+
+
 
 }

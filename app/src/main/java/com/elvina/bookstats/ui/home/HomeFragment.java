@@ -13,11 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elvina.bookstats.database.Statistics;
 import com.elvina.bookstats.ui.book.AddBookActivity;
 import com.elvina.bookstats.R;
 import com.elvina.bookstats.ui.book.ViewBookActivity;
@@ -27,7 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.Serializable;
 import java.util.List;
 
-public class HomeFragment extends Fragment{
+public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
 
@@ -73,8 +75,21 @@ public class HomeFragment extends Fragment{
             @Override
             public void onItemClick(Book book) {
                 Intent intent = new Intent(getActivity(), ViewBookActivity.class);
-                 intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
+                intent.putExtra(ViewBookActivity.EXTRA_ID, book.getId());
                 startActivityForResult(intent, 1);
+            }
+        });
+
+        // GET QUICK STATS
+        homeViewModel.getAllStatistics().observe(getViewLifecycleOwner(), new Observer<List<Statistics>>() {
+            @Override
+            public void onChanged(List<Statistics> statistics) {
+                Statistics allBooks = statistics.get(0);
+                Statistics allReadingBooks = statistics.get(1);
+                Statistics allFinishedBooks = statistics.get(2);
+                System.out.println("TEST-1: " + allBooks.getName() + " " + allBooks.getValue());
+                System.out.println("TEST-1: " + allReadingBooks.getName() + " " + allReadingBooks.getValue());
+                System.out.println("TEST-1: " + allFinishedBooks.getName() + " " + allFinishedBooks.getValue());
             }
         });
 
@@ -90,7 +105,6 @@ public class HomeFragment extends Fragment{
             book.setId(id);
             homeViewModel.delete(book);
             Toast.makeText(getActivity(), "Deleted Book.", Toast.LENGTH_SHORT).show();
-
         }
     }
 

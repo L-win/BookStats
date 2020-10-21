@@ -13,17 +13,16 @@ public class BookRepository {
     private LiveData<List<Book>> allBooks;
 
     private StatisticsDao statisticsDao;
-    private List<Statistics> allStatistcs;
+    private LiveData<List<Statistics>> allStatistcs;
 
     public BookRepository(Application application) {
         BookDatabase bookDatabase = BookDatabase.getInstance(application);
         bookDao = bookDatabase.bookDao();
         allBooks = bookDao.getAllBooks();
 
-
         // TODO: MAYBE WE NEED LIVE DATA?
         statisticsDao = bookDatabase.statisticsDao();
-//        allStatistcs = statisticsDao.getAllStatistics();
+        allStatistcs = statisticsDao.getAllStatistics();
     }
 
     public void insert(Book book) {
@@ -180,8 +179,8 @@ public class BookRepository {
 
     // get stats
 
-    public List<Statistics> getAllStats() {
-        return null;
+    public LiveData<List<Statistics>> getAllStats() {
+        return this.allStatistcs;
     }
 
     private static class GetAllStatisticsAsyncTask extends AsyncTask<Void, Void, List<Statistics>> {

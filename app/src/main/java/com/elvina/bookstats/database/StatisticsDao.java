@@ -1,5 +1,6 @@
 package com.elvina.bookstats.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -16,6 +17,6 @@ public interface StatisticsDao {
     void update(Statistics stats);
 
     @Query("SELECT * FROM statistics_table")
-    List<Statistics> getAllStatistics();
+    LiveData<List<Statistics>> getAllStatistics();
 
 }

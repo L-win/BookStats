@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.elvina.bookstats.database.Book;
 import com.elvina.bookstats.database.BookRepository;
+import com.elvina.bookstats.database.Statistics;
 
 import java.util.List;
 
@@ -15,11 +16,14 @@ public class HomeViewModel extends AndroidViewModel {
 
     private BookRepository repository;
     private LiveData<List<Book>> allBooks;
+    private LiveData<List<Statistics>> allStatistics;
+
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
         repository = new BookRepository(application);
         allBooks = repository.getAllBooks();
+        allStatistics = repository.getAllStats();
     }
 
     public void insert(Book book) {
@@ -42,6 +46,8 @@ public class HomeViewModel extends AndroidViewModel {
         return allBooks;
     }
 
-
+    public LiveData<List<Statistics>> getAllStatistics(){
+        return allStatistics;
+    }
 
 }
