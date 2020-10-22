@@ -5,24 +5,23 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
-import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Book.class, Statistics.class}, version = 1)
-public abstract class BookDatabase extends RoomDatabase {
-    private static BookDatabase instance;
+@androidx.room.Database(entities = {Book.class, Statistics.class}, version = 1)
+public abstract class Database extends RoomDatabase {
+    private static Database instance;
 
     public abstract BookDao bookDao();
 
     public abstract StatisticsDao statisticsDao();
 
-    public static synchronized BookDatabase getInstance(Context context) {
+    public static synchronized Database getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(
                     context.getApplicationContext(),
-                    BookDatabase.class,
+                    Database.class,
                     "note_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallback)
@@ -43,7 +42,7 @@ public abstract class BookDatabase extends RoomDatabase {
         private BookDao bookDao;
         private StatisticsDao statisticsDao;
 
-        private PopulateDbAsyncTask(BookDatabase db) {
+        private PopulateDbAsyncTask(Database db) {
             bookDao = db.bookDao();
             statisticsDao = db.statisticsDao();
         }

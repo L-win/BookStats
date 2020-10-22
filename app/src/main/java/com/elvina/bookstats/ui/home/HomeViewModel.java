@@ -7,21 +7,21 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.elvina.bookstats.database.Book;
-import com.elvina.bookstats.database.BookRepository;
+import com.elvina.bookstats.database.Repository;
 import com.elvina.bookstats.database.Statistics;
 
 import java.util.List;
 
 public class HomeViewModel extends AndroidViewModel {
 
-    private BookRepository repository;
+    private Repository repository;
     private LiveData<List<Book>> allBooks;
     private LiveData<List<Statistics>> allStatistics;
 
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
-        repository = new BookRepository(application);
+        repository = new Repository(application);
         allBooks = repository.getAllBooks();
         allStatistics = repository.getAllStats();
     }

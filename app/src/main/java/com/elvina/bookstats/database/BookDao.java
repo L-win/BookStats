@@ -34,4 +34,7 @@ public interface BookDao {
     @Query("SELECT * FROM book_table WHERE readingStatus = 0 ORDER BY id DESC")
     LiveData<List<Book>> getAllFinishedBooks();
 
+
+
+
 }

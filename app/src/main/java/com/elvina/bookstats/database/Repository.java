@@ -8,20 +8,19 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class BookRepository {
+public class Repository {
     private BookDao bookDao;
     private LiveData<List<Book>> allBooks;
 
     private StatisticsDao statisticsDao;
     private LiveData<List<Statistics>> allStatistcs;
 
-    public BookRepository(Application application) {
-        BookDatabase bookDatabase = BookDatabase.getInstance(application);
-        bookDao = bookDatabase.bookDao();
+    public Repository(Application application) {
+        Database database = Database.getInstance(application);
+        bookDao = database.bookDao();
         allBooks = bookDao.getAllBooks();
 
-        // TODO: MAYBE WE NEED LIVE DATA?
-        statisticsDao = bookDatabase.statisticsDao();
+        statisticsDao = database.statisticsDao();
         allStatistcs = statisticsDao.getAllStatistics();
     }
 
@@ -177,21 +176,9 @@ public class BookRepository {
 
     // STATISTICS
 
-    // get stats
-
     public LiveData<List<Statistics>> getAllStats() {
         return this.allStatistcs;
     }
-
-    private static class GetAllStatisticsAsyncTask extends AsyncTask<Void, Void, List<Statistics>> {
-        @Override
-        protected List<Statistics> doInBackground(Void... voids) {
-            return null;
-        }
-    }
-
-    // update stats
-
 
 }
 

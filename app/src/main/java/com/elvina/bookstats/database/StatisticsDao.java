@@ -19,4 +19,6 @@ public interface StatisticsDao {
     @Query("SELECT * FROM statistics_table")
     LiveData<List<Statistics>> getAllStatistics();
 
+
+
 }
