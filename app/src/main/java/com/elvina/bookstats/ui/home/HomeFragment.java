@@ -81,17 +81,17 @@ public class HomeFragment extends Fragment {
         });
 
         // GET QUICK STATS
-        homeViewModel.getAllStatistics().observe(getViewLifecycleOwner(), new Observer<List<Statistics>>() {
-            @Override
-            public void onChanged(List<Statistics> statistics) {
-                Statistics allBooks = statistics.get(0);
-                Statistics allReadingBooks = statistics.get(1);
-                Statistics allFinishedBooks = statistics.get(2);
-                System.out.println("TEST-1: " + allBooks.getName() + " " + allBooks.getValue());
-                System.out.println("TEST-1: " + allReadingBooks.getName() + " " + allReadingBooks.getValue());
-                System.out.println("TEST-1: " + allFinishedBooks.getName() + " " + allFinishedBooks.getValue());
-            }
-        });
+//        homeViewModel.getAllStatistics().observe(getViewLifecycleOwner(), new Observer<List<Statistics>>() {
+//            @Override
+//            public void onChanged(List<Statistics> statistics) {
+//                Statistics allBooks = statistics.get(0);
+//                Statistics allReadingBooks = statistics.get(1);
+//                Statistics allFinishedBooks = statistics.get(2);
+//                System.out.println("TEST-1: " + allBooks.getName() + " " + allBooks.getValue());
+//                System.out.println("TEST-1: " + allReadingBooks.getName() + " " + allReadingBooks.getValue());
+//                System.out.println("TEST-1: " + allFinishedBooks.getName() + " " + allFinishedBooks.getValue());
+//            }
+//        });
 
         return root;
     }

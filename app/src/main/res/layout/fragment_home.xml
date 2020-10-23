@@ -10,8 +10,8 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:visibility="visible" />
 
@@ -27,9 +27,9 @@
         android:id="@+id/text_empty_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_gravity="center"
+        android:text="empty"
         android:textSize="20sp"
-        android:text="empty"/>
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
