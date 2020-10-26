@@ -164,7 +164,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         this.pagesPerDay = result[0];
         this.pagesLeft = result[1];
         this.daysLeft = result[2];
-        this.bookProgress = String.valueOf(result[3]);
+        this.bookProgress = String.valueOf(result[3])+"%";
 
     }
 
@@ -186,19 +186,20 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
             viewReadingStatus.setText("Reading");
         }
 
-        File filePath = Environment.getExternalStorageDirectory();
-        File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
-        File file = new File(dir,
-                theBook.getTitle().replace(" ", "_") + ".jpg");
-
-        if (file.exists()) {
-            Picasso.get().invalidate(file);
-            Picasso.get()
-                    .load(file)
-                    .resize(400, 550)
-                    .centerCrop()
-                    .into(viewCoverImage);
-        }
+//        SET COVER
+//        File filePath = Environment.getExternalStorageDirectory();
+//        File dir = new File(filePath.getAbsolutePath() + "/BookStats/covers/");
+//        File file = new File(dir,
+//                theBook.getTitle().replace(" ", "_") + ".jpg");
+//
+//        if (file.exists()) {
+//            Picasso.get().invalidate(file);
+//            Picasso.get()
+//                    .load(file)
+//                    .resize(400, 550)
+//                    .centerCrop()
+//                    .into(viewCoverImage);
+//        }
 
         if (!theBook.getReadingStatus()) {
             buttonAddCurrentPage.setVisibility(View.GONE);

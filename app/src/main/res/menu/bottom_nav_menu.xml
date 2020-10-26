@@ -11,9 +11,9 @@
         android:icon="@drawable/ic_finished_books"
         android:title="@string/title_finished" />
 
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_statistics"
-        android:title="@string/title_statistics" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_notifications"-->
+<!--        android:icon="@drawable/ic_statistics"-->
+<!--        android:title="@string/title_statistics" />-->
 
 </menu>
