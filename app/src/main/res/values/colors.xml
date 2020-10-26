@@ -6,14 +6,21 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#03DAC5</color>
 
-    <color name="appBackground">#FFFFFF</color>
+    <color name="appBackground">#F1F1F1</color>
     <color name="cardBackground">#A1A1A1</color>
 
+    <!-- VIEW BOOK -->
+    <color name="textBookTitle">#000000</color>
+    <color name="textBookAuthor">#1C1C1C</color>
+    <color name="textBookYear">#5E5E5E</color>
+    <color name="textSectionHeader">#6A6A6A</color>
     <color name="buttonAddPageText">#FFFFFF</color>
     <color name="buttonAddPageBackground">#77DC7C</color>
 
+    <!-- HOME -->
     <color name="cardTextTitle">#121212</color>
 
+    <!-- ABOUT -->
     <color name="aboutTextMain">#171717</color>
     <color name="aboutTetxtSecond">#656464</color>
 
