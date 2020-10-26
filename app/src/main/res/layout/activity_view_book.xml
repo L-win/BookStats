@@ -80,24 +80,32 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical"
                 android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pages Per Day" />
+                    android:text="Pages per day"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp"
+
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pages Left" />
+                    android:text="Pages left"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Days Left"
-                    android:textStyle="bold" />
+                    android:text="Days left"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -112,20 +120,25 @@
                     android:id="@+id/text_book_pages_per_day"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v" />
+                    android:text="x"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_pages_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v" />
+                    android:text="x"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_days_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="v"
-                    android:textStyle="bold" />
+                    android:text="x"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -162,7 +175,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Started" />
+                    android:text="Started"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_date_added"
@@ -170,7 +185,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -182,7 +199,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last active" />
+                    android:text="Last active"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_date_last_page"
@@ -190,7 +209,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -201,7 +222,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Status" />
+                    android:text="Status"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_reading_status"
@@ -209,7 +232,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -220,7 +245,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pages" />
+                    android:text="Pages"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_all_pages"
@@ -228,7 +255,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -240,7 +269,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Page" />
+                    android:text="Current Page"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_curent_page"
@@ -248,7 +279,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -259,7 +292,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Progress" />
+                    android:text="Progress"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/text_book_progress"
@@ -267,7 +302,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
-                    android:text="v" />
+                    android:text="v"
+                    android:textColor="@color/textSectionItem"
+                    android:textSize="16sp" />
             </LinearLayout>
 
         </LinearLayout>

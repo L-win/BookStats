@@ -14,6 +14,7 @@
     <color name="textBookAuthor">#1C1C1C</color>
     <color name="textBookYear">#5E5E5E</color>
     <color name="textSectionHeader">#6A6A6A</color>
+    <color name="textSectionItem">#252525</color>
     <color name="buttonAddPageText">#FFFFFF</color>
     <color name="buttonAddPageBackground">#77DC7C</color>
 
