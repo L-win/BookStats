@@ -70,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AddBookActivity.class);
                 startActivityForResult(intent, 1);
                 return true;
+            case R.id.about_app:
+                Intent intentA = new Intent(this, AboutActivity.class);
+                startActivityForResult(intentA, 1);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

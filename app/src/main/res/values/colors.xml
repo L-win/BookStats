@@ -14,4 +14,7 @@
 
     <color name="cardTextTitle">#121212</color>
 
+    <color name="aboutTextMain">#171717</color>
+    <color name="aboutTetxtSecond">#656464</color>
+
 </resources>
