@@ -22,7 +22,7 @@ public interface BookDao {
     @Query("DELETE FROM book_table")
     void deleteAllBooks();
 
-    @Query("SELECT * FROM book_table ORDER BY id DESC")
+    @Query("SELECT * FROM book_table where readingStatus = 1 ORDER BY id DESC")
     LiveData<List<Book>> getAllBooks();
 
     @Query("SELECT * FROM book_table WHERE id = :id")

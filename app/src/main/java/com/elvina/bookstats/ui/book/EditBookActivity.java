@@ -74,7 +74,7 @@ public class EditBookActivity extends AppCompatActivity {
         viewYear = findViewById(R.id.edit_text_year_edit);
         viewPages = findViewById(R.id.edit_text_pages_edit);
 
-        viewImage = findViewById(R.id.image_book_cover);
+//        viewImage = findViewById(R.id.image_book_cover);
     }
 
     private void setValues(Book book) {
@@ -88,14 +88,14 @@ public class EditBookActivity extends AppCompatActivity {
         this.coverUri = book.getCoverUri();
         this.dateLastPage = book.getDateLastPage();
 
-        if (this.coverUri != null) {
-            Uri imageUri = Uri.parse(this.coverUri);
-            Picasso.get()
-                    .load(imageUri)
-                    .resize(400, 550)
-                    .centerCrop()
-                    .into(viewImage);
-        }
+//        if (this.coverUri != null) {
+//            Uri imageUri = Uri.parse(this.coverUri);
+//            Picasso.get()
+//                    .load(imageUri)
+//                    .resize(400, 550)
+//                    .centerCrop()
+//                    .into(viewImage);
+//        }
 
     }
 

@@ -132,7 +132,7 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         viewPagesLeft = findViewById(R.id.text_book_pages_left);
         viewDaysLeft = findViewById(R.id.text_book_days_left);
         viewReadingStatus = findViewById(R.id.text_book_reading_status);
-        viewCoverImage = findViewById(R.id.image_book_cover);
+//        viewCoverImage = findViewById(R.id.image_book_cover);
         buttonAddCurrentPage = findViewById(R.id.button_add_current_page);
     }
 

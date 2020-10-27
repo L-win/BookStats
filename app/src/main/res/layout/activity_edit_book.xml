@@ -50,17 +50,17 @@
             android:layout_marginTop="10dp"
             android:text="Finished Reading" />
 
-        <Button
-            android:id="@+id/button_book_cover_change"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Set Book cover" />
+<!--        <Button-->
+<!--            android:id="@+id/button_book_cover_change"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:text="Set Book cover" />-->
 
-        <ImageView
-            android:id="@+id/image_book_cover"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+<!--        <ImageView-->
+<!--            android:id="@+id/image_book_cover"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content" />-->
 
     </LinearLayout>
 

@@ -56,14 +56,14 @@ public abstract class Database extends RoomDatabase {
                     1600);
             bookA.setCoverUri("");
             bookA.setDateAdded("Thu Sep 28 20:21:30 UTC 2020");
-            bookDao.insert(bookA);
+//            bookDao.insert(bookA);
 
             Statistics statsA = new Statistics("sumAllAddedBooks",0);
             Statistics statsB = new Statistics("sumAllReadingBooks",0);
             Statistics statsC = new Statistics("sumAllFinishedBooks",0);
-            statisticsDao.insert(statsA);
-            statisticsDao.insert(statsB);
-            statisticsDao.insert(statsC);
+//            statisticsDao.insert(statsA);
+//            statisticsDao.insert(statsB);
+//            statisticsDao.insert(statsC);
 
             return null;
         }

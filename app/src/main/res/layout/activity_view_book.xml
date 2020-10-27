@@ -374,23 +374,12 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!--    <Button-->
-    <!--        style="@style/Widget.AppCompat.Button"-->
-    <!--        android:id="@+id/button_add_current_page"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:background="@drawable/button_add_book"-->
-    <!--        android:padding="15dp"-->
-    <!--        android:text="Add Current Page"-->
-    <!--        android:textColor="@color/buttonAddPageText" />-->
-
     <Button
         android:id="@+id/button_add_current_page"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:backgroundTint="@color/buttonAddPageBackground"
         android:padding="15dp"
-        android:text="Add Current Page"/>
+        android:text="Add Current Page" />
 </LinearLayout>
