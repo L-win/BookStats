@@ -18,10 +18,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?android:attr/windowBackground"
-        app:menu="@menu/bottom_nav_menu"
         app:itemHorizontalTranslationEnabled="false"
+        app:itemIconSize="24sp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
         app:labelVisibilityMode="labeled"
-        app:itemIconSize="25sp"
-        />
+        app:menu="@menu/bottom_nav_menu" />
 
 </RelativeLayout>

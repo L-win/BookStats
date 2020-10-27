@@ -9,7 +9,8 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_finished_books"
-        android:title="@string/title_finished" />
+        android:title="@string/title_finished"
+        />
 
 <!--    <item-->
 <!--        android:id="@+id/navigation_notifications"-->

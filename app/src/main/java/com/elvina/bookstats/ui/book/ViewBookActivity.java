@@ -3,6 +3,7 @@ package com.elvina.bookstats.ui.book;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
@@ -56,7 +57,12 @@ public class ViewBookActivity extends AppCompatActivity implements AddCurrentPag
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_book);
 
+        // SET TOOLBAR
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setTitle("Book Details");
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // PREPARE VIEWS
         prepareViews();

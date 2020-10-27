@@ -17,13 +17,21 @@
         android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".ui.book.EditBookActivity" />
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.book.EditBookActivity"
+            android:parentActivityName=".ui.book.ViewBookActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.book.ViewBookActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.book.AddBookActivity"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"

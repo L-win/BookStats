@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#272727</color>
-    <color name="colorPrimaryDark">#000000</color>
+<!--    <color name="colorPrimary">#272727</color>-->
+<!--    <color name="colorPrimaryDark">#000000</color>-->
+    <color name="colorPrimary">#0B0B0B</color>
+    <color name="colorPrimaryDark">#E3E3E3</color>
     <color name="colorAccent">#00C3FF</color>
     <color name="appBar">#F1F1F1</color>
 
     <!-- GENERAL -->
     <color name="appBackground">#F1F1F1</color>
     <color name="cardBackground">#A1A1A1</color>
+    <color name="toolbarBackground">#f1f1f1</color>
+    <color name="toolbarText">#191919</color>
 
     <!-- VIEW BOOK -->
     <color name="textBookTitle">#000000</color>

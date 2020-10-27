@@ -3,6 +3,7 @@ package com.elvina.bookstats.ui.book;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -49,7 +50,15 @@ public class EditBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_book);
 
+
+        // SET TOOLBAR
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setTitle("Edit Book");
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+        //TODO: crashes on Back icon press
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         bookId = intent.getIntExtra(ViewBookActivity.EXTRA_ID, 1);
@@ -178,7 +187,7 @@ public class EditBookActivity extends AppCompatActivity {
         }
     }
 
-    private void saveBook(){
+    private void saveBook() {
         Book newBook = getValues();
         bookViewModel.update(newBook);
         Toast.makeText(

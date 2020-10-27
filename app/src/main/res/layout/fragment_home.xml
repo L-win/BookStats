@@ -9,6 +9,10 @@
     android:background="@color/appBackground"
     tools:context=".ui.home.HomeFragment">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="50dp"
@@ -22,7 +26,8 @@
         android:layout_height="match_parent"
         android:background="@color/appBackground"
         android:visibility="gone"
-        tools:listitem="@layout/book_adapter" />
+        tools:listitem="@layout/book_adapter"
+        android:layout_marginTop="50dp"/>
 
     <TextView
         android:id="@+id/text_empty_list"
