@@ -7,10 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
 
-
-<!--        <item name="actionBarStyle">@color/appBar</item>-->
-<!--        <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>-->
-<!--        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>-->
-<!--        <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>-->
+        <!--        <item name="actionBarStyle">@color/appBar</item>    -->
+        <!--        <item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>     -->
+        <!--        <item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>      -->
+        <!--        <item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>     -->
     </style>
 </resources>

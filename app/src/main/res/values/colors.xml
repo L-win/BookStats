@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#272727</color>
     <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorAccent">#00C3FF</color>
     <color name="appBar">#F1F1F1</color>
 
     <!-- GENERAL -->
@@ -15,8 +15,8 @@
     <color name="textBookYear">#5E5E5E</color>
     <color name="textSectionHeader">#6A6A6A</color>
     <color name="textSectionItem">#252525</color>
-    <color name="buttonAddPageText">#FFFFFF</color>
-    <color name="buttonAddPageBackground">#77DC7C</color>
+    <color name="buttonAddPageText">#222222</color>
+    <color name="buttonAddPageBackground">#FFFFFF</color>
 
     <!-- HOME -->
     <color name="cardTextTitle">#121212</color>
