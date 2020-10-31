@@ -40,7 +40,7 @@ public class FinishedBooksFragment extends Fragment {
         // SET TOOLBAR
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle("Book Stats");
+        getActivity().setTitle("Library");
 
         // PROGRESS BAR
         final ProgressBar progressBar = root.findViewById(R.id.progress_bar);

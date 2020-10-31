@@ -43,7 +43,7 @@ public class HomeFragment extends Fragment {
         // SET TOOLBAR
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle("Book Stats");
+        getActivity().setTitle("Library");
 
 
         // PROGRESS BAR
