@@ -4,5 +4,11 @@
     <string name="title_finished">Finished Books</string>
     <string name="title_statistics">Stats</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_developer">
+        Developed by Elvin A.
+        \ngithub.com/L-win
+        \n2020
+    </string>
+    <string name="app_current_version">v1.0, November 2020</string>
+    <string name="app_recent_change">Nov 1, 2020. First release.</string>
 </resources>

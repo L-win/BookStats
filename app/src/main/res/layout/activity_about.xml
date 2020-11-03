@@ -15,9 +15,9 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_below="@+id/toolbar">
+        android:padding="10dp">
 
 
         <LinearLayout
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxHeight="200dp"
-                android:text="Developed by Elvin A.\ngithub.com\/L-win\n2020"
+                android:text="@string/app_developer"
                 android:textColor="@color/aboutTetxtSecond"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxHeight="200dp"
-                android:text="v1.0, October 2020."
+                android:text="@string/app_current_version"
                 android:textColor="@color/aboutTetxtSecond"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxHeight="200dp"
-                android:text="Oct 27, 2020. First release."
+                android:text="@string/app_recent_change"
                 android:textColor="@color/aboutTetxtSecond"
                 android:textSize="16sp" />
         </LinearLayout>
